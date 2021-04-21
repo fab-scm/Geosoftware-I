@@ -1,4 +1,6 @@
 "use strict"
+
+// Bounding box Coordinates for the 
 const leftUpperCoordinate = polygon[3];
 const rightBottomCoordinate = polygon[1];
 
@@ -6,6 +8,7 @@ let resultArray = new Array(route.length);
 let intersectIndex = [];
 let distances = new Array(route.length-1);
 let distancesSubsequences = [];
+let contentTable = [];
 
 // The function can find out whether a point is Inside
 // Works only with polygons which are parellel to the longitude and latitude-axis 
@@ -82,6 +85,59 @@ function calculateTotalDistance(){
 }
 
 
+function fillContentTable(){
+    for (let index = 0; index < distancesSubsequences.length; index++) {
+        var tableRow = Array(5);
+        tableRow[0] = index + 1;
+        tableRow[1] = distancesSubsequences[index];
+        tableRow[2] = route[intersectIndex[index]];
+        tableRow[3] = route[intersectIndex[index + 1]];
+        tableRow[4] = resultArray[intersectIndex[index] + 1];
+
+        contentTable.push(tableRow);
+    }
+}
+
+
+
+function makeTableHTML(myArray) {
+    var result = "<table border=1>";
+    for(var i=0; i<myArray.length; i++) {
+        result += "<tr>";
+        for(var j=0; j<myArray[i].length; j++){
+            result += "<td>"+myArray[i][j]+"</td>";
+        }
+        result += "</tr>";
+    }
+    result += "</table>";
+
+    return result;
+}
+
+function convertArrayValues(myArray) {
+    for(var i=0; i<myArray.length; i++) {
+        for(var j=0; j<myArray[i].length; j++){
+           if (j == 1){
+                myArray[i][j] = Math.round(myArray[i][j] * 100) / 100;
+           }
+           if (j == 2 || j == 3){
+                myArray[i][j] = "(" + myArray[i][j] + ")";
+           }
+           if (j == 4) {
+               if (myArray[i][j] == true) {
+                    myArray[i][j] = "Yes";
+               }
+               if (myArray[i][j] == false) {
+                    myArray[i][j] = "No";
+               }
+
+           }
+        }
+    }
+}
+
+
+
 fillResultArray();
 console.table(resultArray);
 fillIntersectIndex();
@@ -89,6 +145,18 @@ console.table(intersectIndex);
 console.log(getDistanceFromLatLonInMeters(route[0], route[1]));
 calculatePointToPointDistances();
 console.table(distances);
+
+
 calculateSubsequenceDistances();
 console.table(distancesSubsequences);
 console.log(calculateTotalDistance());
+// console.table(distancesSubsequences.sort((a,b) => a-b));
+fillContentTable();
+
+
+console.table(contentTable);
+contentTable.sort((a,b) => b[1] - a[1]);
+console.table(contentTable);
+convertArrayValues(contentTable);
+document.getElementById("tbody").innerHTML = makeTableHTML(contentTable)
+document.getElementById("totalLength").innerHTML = "Total length: " + (Math.round(calculateTotalDistance() * 100)) / 100 + " meters";
