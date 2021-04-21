@@ -16,7 +16,7 @@ function isPointInsidePolygon(coordinate, leftUpperCoordinateBBox, rightBottomCo
 }
 
 
-// The function fills the result Array with the true if the matching coordinate ist inside the polygon
+// The function fills the result Array with true if the matching coordinate is inside the polygon
 // and false if the matching coordinate is outside the Polygon.
 function fillResultArray(){
     for (let index = 0; index < route.length; index++) {
