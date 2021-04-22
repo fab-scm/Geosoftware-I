@@ -184,8 +184,8 @@ function makeTableHTML(myArray) {
 
 /**
  * This function converts the values in the result table.
- * The function rounds the lengths to two decimal places,
- * brackets the coordinates and converts "True" to "Yes" and "False" to "No".
+ * The function rounds the lengths to two decimal digits,
+ * puts brackets around the coordinates and converts "True" to "Yes" and "False" to "No".
  * @param {*} myArray 
  */
 function convertArrayValues(myArray) {
@@ -233,5 +233,8 @@ console.log(calculateTotalDistance());
 console.table(contentTable);
 
 
+//Refers to the table body from the html-document and inserts the code generated in the makeTableHTML-function.
 document.getElementById("tbody").innerHTML = makeTableHTML(contentTable)
+
+//Refers to the paragraph of the html-document and creates the output for the total length.
 document.getElementById("totalLength").innerHTML = "Total length: " + (Math.round(calculateTotalDistance() * 100)) / 100 + " meters";
