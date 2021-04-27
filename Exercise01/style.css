@@ -17,7 +17,7 @@ p {
 
 table, th, td {
     text-align: center;
-    background-color: lavender;
+    background-color: rgba(41, 136, 180, 0.281);
     border-collapse: collapse;
     border: 1px solid rgb(0, 0, 0);
     font-family: Arial, Helvetica, sans-serif;

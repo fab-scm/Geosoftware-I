@@ -2,25 +2,33 @@
 <head>
     <title>Geosoftware I</title>
     <link rel= "stylesheet" href="style.css"/>
-    <script defer src="route.js"></script>
-    <script defer src="polygon.js"></script>
+
+    <script src="route.js"></script>
+    <script src="polygon.js"></script>
+    <script src="calculateTable.js"></script>
     <script defer src="main.js"></script>
 </head>
 <body>
+
     <h1>Exercise 01</h1>
-    <p>The given table shows the different sections of a route that runs through a given polygon.
-         The sections are sorted by length. In addition, the table shows the first and last coordinate and
-          if the section is inside or outside the polygon. The lengths are rounded to two digits. </p>
+    <p>by Fabian Schumacher</p>
+
+    <p> The given table shows the different sections of a route that runs through a given polygon.
+        The sections are sorted by length. In addition, the table shows the first and last coordinate and
+        if the section is inside or outside the polygon. The lengths are rounded to two digits. 
+    </p>
+
     <table style="width: 80%;">
         <tr>
             <th>Section</th>
             <th>Length</th>
-            <th>First Coordinate</th>
-            <th>Last Coordinate</th>
+            <th>First Coordinate (lng, lat)</th>
+            <th>Last Coordinate (lng, lat)</th>
             <th>Inside Polygon?</th>
         </tr>
-        <tbody id="tbody">
-        </tbody>
+        <tbody id="tbody"></tbody>
     </table>
+
     <p id = "totalLength">The total length of the route is + id</p>
+
 </body>
