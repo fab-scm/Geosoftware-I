@@ -13,9 +13,20 @@
     <h1>Exercise 01</h1>
     <p>by Fabian Schumacher</p>
 
+    <div id="upload">
+        <p>Upload a GeoJSON file of type "linestring" to intersect it with the polygon</p>
+        <input type="file" id="uploadfield">
+    </div>
+
+    <p><button id="buttonUploaded">Use uploaded GeoJSON ""LineString"</button></p>
+    <p><button id="buttonDefault">Use default GeoJSON "LineString"</button></p>
+
+    <div id="table" style="display: none;">
+
     <p> The given table shows the different sections of a route that runs through a given polygon.
         The sections are sorted by length. In addition, the table shows the first and last coordinate and
         if the section is inside or outside the polygon. The lengths are rounded to two digits. 
+
     </p>
 
     <table style="width: 80%;">
@@ -31,4 +42,10 @@
 
     <p id = "totalLength">The total length of the route is + id</p>
 
+    <button id="lineStringButton">Show LineString GeoJSON file</button>
+    <button id="polygonButton">Show Polygon GeoJSON file</button>
+    <p id="routeJSONcode" style="display: none;"></p>
+    <p id="polygonJSONcode" style="display: none"></p>
+
+    </div>
 </body>
