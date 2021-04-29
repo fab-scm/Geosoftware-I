@@ -13,9 +13,9 @@
     <h1>Exercise 02</h1>
     <p>by Fabian Schumacher</p>
 
-    <div id="upload">
+    <div id="upload" style="border: 2px solid rgb(0, 0, 0); width: 40%; margin-left:auto; margin-right:auto">
         <p>Upload a GeoJSON file of type "linestring" to intersect it with the polygon</p>
-        <input type="file" id="uploadfield">
+        <p><input type="file" id="uploadfield"></p>
     </div>
 
     <p>
@@ -25,10 +25,10 @@
 
     <div id="table" style="display: none;">
 
-    <p> The given table shows the different sections of a route that runs through a given polygon.
+    <p style="width: 60%; text-align: justify, center; margin-left: auto; margin-right: auto;"> 
+        The given table shows the different sections of a route that runs through a given polygon.
         The sections are sorted by length. In addition, the table shows the first and last coordinate and
         if the section is inside or outside the polygon. The lengths are rounded to two digits. 
-
     </p>
 
     <table style="width: 80%;">
@@ -44,10 +44,13 @@
 
     <p id = "totalLength">The total length of the route is + id</p>
 
-    <button id="lineStringButton">Show LineString GeoJSON file</button>
-    <button id="polygonButton">Show Polygon GeoJSON file</button>
-    <p id="routeJSONcode" style="display: none;"></p>
-    <p id="polygonJSONcode" style="display: none"></p>
+    <p>
+        <button id="lineStringButton">Show LineString GeoJSON file</button>
+        <button id="polygonButton">Show Polygon GeoJSON file</button>
+        <p id="routeJSONcode" style="display: none;"></p>
+        <p id="polygonJSONcode" style="display: none"></p>
+    </p>
+    
 
     </div>
 </body>
