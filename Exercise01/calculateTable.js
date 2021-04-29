@@ -215,21 +215,13 @@
  
  
  /**
-  * This function converts the values in the result table.
-  * The function rounds the lengths to two decimal digits,
-  * puts brackets around the coordinates and converts "True" to "Yes" and "False" to "No".
-  * @param {*} myArray 
-  */
- 
- 
- /**
   * This function converts the values in the table-array in a more readable format.
   * The function rounds the lengths to two decimal digits, puts brackets around the coordinates and converts "True" to "Yes" and "False" to "No".
   * 
-  * @param {number[][]} route An array of route. A point should be in the form [long,lat] in WGS84.
-  * @param {number[]} leftUpperCornerBBox A point from the form [long,lat] in WGS84. Should be the left upper corner from the bounding box of the rectangle.
-  * @param {number[]} rightBottomCornerBBox A point from the form [long,lat] in WGS84. Should be the right bottom corner from the bounding box of the rectangle.
-  * @returns a 2D array with the sorted information needed for the HTML-document in a more readable format
+  * @param {[[number, number],...]} route - [[lng, lat],...] in WGS84 - an array of coordinates which form a route
+  * @param {[number]} leftUpperCoordinateBBox - [lng, lat] in WGS84 - the left upper coordinate of the input polygon
+  * @param {[number]} rightBottomCoordinateBBox - [lng, lat] in WGS84 - the right bottom coordinate of the input polygon
+  * @returns - a 2D array with the sorted information needed for the HTML-document in a more readable format
   */
   function convertTableValues(route, leftUpperCoordinateBBox = leftUpperCoordinate, rightBottomCoordinateBBox = rightBottomCoordinate){
      let rawData = fillContentTable(route, leftUpperCoordinateBBox, rightBottomCoordinateBBox);
@@ -250,9 +242,9 @@
  
  /**
    * Rounds a value by a given precision
-   * @param {number} x number which should be rounded.
-   * @param {number} n how many values  digits?
-   * @returns rounded value
+   * @param {number} x - number which should be rounded.
+   * @param {number} n - how many values  digits?
+   * @returns - rounded value
    */
   function round(x,n){
      return Math.round(x * 10**n)/10**n;
