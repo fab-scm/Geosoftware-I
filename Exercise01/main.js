@@ -107,6 +107,7 @@ function showTableResults(result, routeStringJSON, polyStringJSON)
 
     // Makes the table division visible
     table.style.display = "block";
+    JSONcode.style.display = "block"
 }
 
 

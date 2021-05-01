@@ -13,44 +13,52 @@
     <h1>Exercise 02</h1>
     <p>by Fabian Schumacher</p>
 
-    <div id="upload" style="border: 2px solid rgb(0, 0, 0); width: 40%; margin-left:auto; margin-right:auto">
+    <div id="upload">
         <p>Upload a GeoJSON file of type "linestring" to intersect it with the polygon</p>
         <p><input type="file" id="uploadfield"></p>
     </div>
 
-    <p>
-        <button id="buttonUploaded">Use uploaded GeoJSON "LineString"</button>
-        <button id="buttonDefault">Use default GeoJSON "LineString"</button>
-    </p>
+    <div>
+        <p>
+            <button id="buttonUploaded">Use uploaded GeoJSON "LineString"</button>
+            <button id="buttonDefault">Use default GeoJSON "LineString"</button>
+        </p>    
+    </div>
 
     <div id="table" style="display: none;">
 
-    <p style="width: 60%; text-align: justify, center; margin-left: auto; margin-right: auto;"> 
-        The given table shows the different sections of a route that runs through a given polygon.
-        The sections are sorted by length. In addition, the table shows the first and last coordinate and
-        if the section is inside or outside the polygon. The lengths are rounded to two digits. 
-    </p>
+        <p> 
+            The given table shows the different sections of a route that runs through a given polygon.
+            The sections are sorted by length. In addition, the table shows the first and last coordinate and
+            if the section is inside or outside the polygon. The lengths are rounded to two digits. 
+        </p>
 
-    <table style="width: 80%;">
-        <tr>
-            <th>Section</th>
-            <th>Length</th>
-            <th>First Coordinate (lng, lat)</th>
-            <th>Last Coordinate (lng, lat)</th>
-            <th>Inside Polygon?</th>
-        </tr>
-        <tbody id="tbody"></tbody>
-    </table>
+        <table style="width: 80%;">
+            <tr>
+                <th>Section</th>
+                <th>Length</th>
+                <th>First Coordinate (lng, lat)</th>
+                <th>Last Coordinate (lng, lat)</th>
+                <th>Inside Polygon?</th>
+            </tr>
+            <tbody id="tbody"></tbody>
+        </table>
 
-    <p id = "totalLength">The total length of the route is + id</p>
+        <p id = "totalLength">The total length of the route is + id</p>
+    </div>
 
-    <p>
-        <button id="lineStringButton">Show LineString GeoJSON file</button>
-        <button id="polygonButton">Show Polygon GeoJSON file</button>
+    <div id="JSONcode" style="display: none;">
+        <p>
+            <button id="lineStringButton">Show LineString GeoJSON file</button>
+            <button id="polygonButton">Show Polygon GeoJSON file</button>
+        </p>
+        
+
         <p id="routeJSONcode" style="display: none;"></p>
         <p id="polygonJSONcode" style="display: none"></p>
-    </p>
-    
+    </div>
+            
+        
 
     </div>
 </body>
