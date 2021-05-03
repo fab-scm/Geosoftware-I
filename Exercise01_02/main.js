@@ -27,6 +27,7 @@
     return result;
 }
 
+
 // store HTML-element in variables to work with them
 let upload = document.getElementById("upload")
 let uploadfield = document.getElementById("uploadfield")
@@ -46,25 +47,53 @@ let polygonButton = document.getElementById("polygonButton")
  * @param {EventListener} listener - function to call when the event is triggered
  */ 
 buttonUploaded.addEventListener('click', function(){
-    if  (uploadfield.files.length > 0)                          // if a file was selected
+    if  (uploadfield.files.length > 0)                                  // if a file was selected
     {
-        var reader = new FileReader()                           // read the file via FileReader()
-        reader.readAsText(uploadfield.files[0]);                // reads the input file as a text
-        // event listener to check, if the reader has read the file
-        reader.addEventListener('load', function(){
-            let routeJSON = JSON.parse(reader.result);          // parses the text-read input file as JSON
-            let routeStringJSON = JSON.stringify(routeJSON);    // makes a string out of the JSON file
-            let polygonJSON = makePolygonToGJSON(polygon);      // creates a GeoJSON object out of the given polygon
-            let polyStringJSON = JSON.stringify(polygonJSON);   // creates a string out of the GeoJSON file
+        if (checkFileExtension()){                                      // checks if the uploaded file is of type .geojson
+            var reader = new FileReader()                               // read the file via FileReader()
+            reader.readAsText(uploadfield.files[0]);                    // reads the input file as a text
+            // event listener to check, if the reader has read the file
+            reader.addEventListener('load', function(){
+                let routeJSON = JSON.parse(reader.result);              // parses the text-read input file as JSON
+                if (routeJSON.type == "LineString"){    	            // checks if the parsed JSON file is of type LineString
+                    let routeStringJSON = JSON.stringify(routeJSON);    // makes a string out of the JSON file
+                    let polygonJSON = makePolygonToGJSON(polygon);      // creates a GeoJSON object out of the given polygon
+                    let polyStringJSON = JSON.stringify(polygonJSON);   // creates a string out of the GeoJSON file
 
-            showTableResults(routeJSON, routeStringJSON, polyStringJSON);
-        })
+                    showTableResults(routeJSON, routeStringJSON, polyStringJSON);
+                }
+                else {
+                    alert("The input JSON file is not of type LineString");
+                }   
+            })
+        }
+        else {
+            alert ("Uploaded file is not of type .geojson")
+        }
     }
     else
     {
         alert("no file was uploaded")
     }
 })
+
+
+/**
+ * The function checks if the type of the uploaded file is .geojson and returns true if it is
+ * and false if not.
+ * 
+ * @returns Boolean - true if type geojson and false if not
+ */
+function checkFileExtension() {
+    let fileName = document.getElementById('uploadfield').value;
+    let extension = fileName.split('.').pop();
+    if (extension == "geojson"){
+        return true;
+    }
+    else{
+        return false;
+    }
+};
 
 
 /**
@@ -77,7 +106,7 @@ buttonUploaded.addEventListener('click', function(){
  */ 
 buttonDefault.addEventListener('click', function(){
     let routeJSON = makePointArrayToGJSON(route);           // creates a GeoJSON object out of the given route
-    let routeStringJSON = JSON.stringify(routeJSON);        // makes a string out of the JSON object
+    let routeStringJSON = JSON.stringify(routeJSON);        // makes a string out of the GeoJSON object
     let polygonJSON = makePolygonToGJSON(polygon);          // creates a GeoJSON object out of the given polygon
     let polyStringJSON = JSON.stringify(polygonJSON);       // creates a string out of the GeoJSON polygon object
     
@@ -151,6 +180,7 @@ polygonButton.addEventListener('click', function(){
         showPolygonCode = false;
     } 
 })
+
 
 /**
  * The function creates and returns a GeoJSON LineString object out of a given 2D input array of coordinates.
