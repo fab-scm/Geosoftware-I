@@ -54,7 +54,8 @@ buttonUploaded.addEventListener('click', function(){
             reader.readAsText(uploadfield.files[0]);                    // reads the input file as a text
             // event listener to check, if the reader has read the file
             reader.addEventListener('load', function(){
-                let routeJSON = JSON.parse(reader.result);              // parses the text-read input file as JSON
+                isGeoJSONvalid(reader.result);                          // checks if the string read by the file reader is a valid geojson file
+                let routeJSON = JSON.parse(reader.result);              // parses the string read by the FileReader as a JSON object
                 if (routeJSON.type == "LineString"){    	            // checks if the parsed JSON file is of type LineString
                     let routeStringJSON = JSON.stringify(routeJSON);    // makes a string out of the JSON file
                     let polygonJSON = makePolygonToGJSON(polygon);      // creates a GeoJSON object out of the given polygon
@@ -73,7 +74,7 @@ buttonUploaded.addEventListener('click', function(){
     }
     else
     {
-        alert("no file was uploaded")
+        alert("No file was uploaded")
     }
 })
 
@@ -95,6 +96,18 @@ function checkFileExtension() {
     }
 };
 
+/**
+ * The function checks if a string can be parsed to JSON and throws an alert if not.
+ * 
+ * @param {string} geoJSON - the string read by the FileReader
+ */
+function isGeoJSONvalid(geoJSON) {
+    try {                                                   // try to parse the string to JSON
+        JSON.parse(geoJSON);                                
+    } catch (error) {                                       // catch the error if not parsable and throw an alert
+        alert("Invalid GeoJSON file");
+    }
+}
 
 /**
  * Event listener that checks for a click event on the given button. When the button is clicked the callback function
