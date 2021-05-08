@@ -23,7 +23,7 @@ function loadWeatherAtPosition(latitude, longitude) {
             showWeatherAtPosition(res, image);
         }
     }
-    xhttp.open("GET", `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=97bc8bb7723c267f11e85434445965a9`, true)
+    xhttp.open("GET", `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${openweatherAPIKey}`, true)
     xhttp.send()
     
 }
