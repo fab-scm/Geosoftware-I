@@ -1,0 +1,25 @@
+////////////////////
+//Aktuelles Wetter//
+////////////////////
+Datum/Wochentag
+Temperatur °C aktuell - current.temp
+Temperatur °C gefühlt - current.feels_like
+Wind (Geschwindigkeit(m/s) und Richtung) - current.wind_speed
+Feuchtigkeit (%) - current.humidity
+Bewölkung - current.clouds
+Regen (j/n) - current.rain
+
+
+///////////////
+///Vorhersage//
+///////////////
+
+stündlich:
+Temperatur (nächste 5 Std) - 
+Niederschlagswahrscheinlichkeit (nächste 5 Std)
+Bewölkung
+
+tägliche:
+Tempeartur (nächste 5 Std) - daily.temp.min/max
+Niederschlagswahrscheinlichkeit (nächste 5 Tage) - daily.pop
+Bewölkung - daily.clouds
