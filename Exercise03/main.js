@@ -91,12 +91,12 @@ function showWeatherAtPosition(weatherData, weatherImage) {
     //console.log(date.toLocaleDateString('en-DE', options))
 
     // filling the HTML-elements with information about date and weather
-    document.getElementById("date").innerHTML = "Date: " + date.toLocaleDateString('en-DE', options);
+    document.getElementById("date").innerHTML = "Date: " + date.toLocaleDateString('en-EN', options);
     document.getElementById("weatherImage").src = weatherImage.src;
     document.getElementById("weatherDescription").innerHTML = weatherData.current.weather[0].description;
-    document.getElementById("currentTemp").innerHTML = "Temperature: " + Math.round(weatherData.current.temp) + " °C";
-    document.getElementById("feelsLikeTemp").innerHTML = "Feels-like: " + Math.round(weatherData.current.feels_like) + " °C";
-    document.getElementById("currentWind").innerHTML = "Windspeed and direction: " + weatherData.current.wind_speed + " m/s, " + weatherData.current.wind_deg + " °";
+    document.getElementById("currentTemp").innerHTML = "Temperature: " + Math.round(weatherData.current.temp) + "°C";
+    document.getElementById("feelsLikeTemp").innerHTML = "Feels-like: " + Math.round(weatherData.current.feels_like) + "°C";
+    document.getElementById("currentWind").innerHTML = "Windspeed and direction: " + weatherData.current.wind_speed + " m/s , " + weatherData.current.wind_deg + "°";
     document.getElementById("currentHumidity").innerHTML = "Humidity: " + weatherData.current.humidity + " %";
     document.getElementById("currentClouds").innerHTML = "Cloudiness: " + weatherData.current.clouds + " %";
     
