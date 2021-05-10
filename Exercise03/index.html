@@ -1,17 +1,31 @@
 <!DOCTYPE html>
     <head>
+        <meta charset="utf-8"/>
         <title>Geosoftware I</title>
         <link rel="stylesheet" href="style.css"/>
         
-        <script src="openweatherAPIKey.js"></script>
+        <script src="APIKeys.js"></script>
         <script defer src="main.js"></script>
     </head>
     <body>
         <h1>Exercise 03</h1>
         <p>by Fabian Schumacher</p>
-        <button id="buttonPosition">Get current position</button>
+        
+        <p>
+            <button id="buttonPosition">Get weather at current position</button>
+        </p>
 
-        <div id="currentWeather">
+        <div id="currentPosition" style=" display: none">
+            <p>The current position is:</p>
+            <p id="cityName"></p>
+            <p id="coordinates"></p>
+            <p id="accuracy"></p>            
+        </div> 
+
+        <div id="currentWeather" style="display: none;">
+            <p>
+                <image id="weatherImage"></image>
+            </p>  
             <p id="date"></p>
             <p id="currentTemp"></p>
             <p id="feelsLikeTemp"></p>
@@ -21,9 +35,5 @@
             <p id="currentRain"></p>
         </div>
 
-        <div style="margin-top: 60px;">
-            <p>The current position is:</p>
-            <p id="coordinates"></p>
-            <p id="accuracy"></p>            
-        </div> 
+       
     </body>
