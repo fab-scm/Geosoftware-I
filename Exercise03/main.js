@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 "use strict"
 
 
@@ -31,8 +35,8 @@ function success(pos) {
     var position = pos.coords;                      
 
     // call the functions that display the weather and location information
-    getCity(position);
-    loadWeatherAtPosition(position.latitude, position.longitude);
+    getReadableLocation(position);
+    loadWeatherAtLocation(position.latitude, position.longitude);
 
     // makes everything visible
     currentPosition.style.display = "block"; 
@@ -57,7 +61,7 @@ function error() {
  * @param {float} latitude - latitude coordinate usually in WGS84
  * @param {float} longitude - longitude coordinate usually in WGS84
  */
-function loadWeatherAtPosition(latitude, longitude) {
+function loadWeatherAtLocation(latitude, longitude) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {                             // if the state of the request changes the function is executed
         if (this.readyState == 4 && this.status == 200) {               // if request was successfull
@@ -67,7 +71,7 @@ function loadWeatherAtPosition(latitude, longitude) {
             let image = new Image();                                    // create new Image-object
             image.src = `http://openweathermap.org/img/wn/${res.current.weather[0].icon}@2x.png` // let the src of the image object be the current weather symbol provided by openweather
 
-            showWeatherAtPosition(res, image);                          // calls the function which fills the HTML document with all the necessary information
+            showWeatherAtLocation(res, image);                          // calls the function which fills the HTML document with all the necessary information
         }
     }
     xhttp.open("GET", `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${openweatherAPIKey}`, true)
@@ -83,7 +87,7 @@ function loadWeatherAtPosition(latitude, longitude) {
  * @param {object} weatherData - the weather data accessed as JSON-object
  * @param {image} weatherImage - the weather image accessed as png
  */
-function showWeatherAtPosition(weatherData, weatherImage) {
+function showWeatherAtLocation(weatherData, weatherImage) {
 
     // craete date-object and define the 
     let date = new Date(weatherData.current.dt*1000)
@@ -91,12 +95,13 @@ function showWeatherAtPosition(weatherData, weatherImage) {
     //console.log(date.toLocaleDateString('en-DE', options))
 
     // filling the HTML-elements with information about date and weather
-    document.getElementById("date").innerHTML = "Date: " + date.toLocaleDateString('en-EN', options);
+    document.getElementById("date").innerHTML = date.toLocaleDateString('en-EN', options);
     document.getElementById("weatherImage").src = weatherImage.src;
     document.getElementById("weatherDescription").innerHTML = weatherData.current.weather[0].description;
     document.getElementById("currentTemp").innerHTML = "Temperature: " + Math.round(weatherData.current.temp) + "°C";
     document.getElementById("feelsLikeTemp").innerHTML = "Feels-like: " + Math.round(weatherData.current.feels_like) + "°C";
-    document.getElementById("currentWind").innerHTML = "Windspeed and direction: " + weatherData.current.wind_speed + " m/s , " + weatherData.current.wind_deg + "°";
+    document.getElementById("currentWindspeed").innerHTML = "Windspeed: " + weatherData.current.wind_speed + " m/s"
+    document.getElementById("currentWindDirection").innerHTML = "Wind direction: " + weatherData.current.wind_deg + "°";
     document.getElementById("currentHumidity").innerHTML = "Humidity: " + weatherData.current.humidity + " %";
     document.getElementById("currentClouds").innerHTML = "Cloudiness: " + weatherData.current.clouds + " %";
     
@@ -112,7 +117,7 @@ function showWeatherAtPosition(weatherData, weatherImage) {
  * @param {float} latitude - latitude coordinate usually in WGS84
  * @param {float} longitude - longitude coordinate usually in WGS84
  */
-function getCity(position) {
+function getReadableLocation(position) {
     var xhr = new XMLHttpRequest()                                  
     xhr.onreadystatechange = function() {                           // if the state of the request changes the function is executed
         if (this.readyState == 4 && this.status == 200) {           // if request was successfull
