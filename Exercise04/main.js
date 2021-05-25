@@ -6,7 +6,7 @@
 
 "use strict"
 
-// get a first map into the HTML-document
+// get a first map into the HTML-document and store the map object in the variable
 var map = createMap();
 
 // get the tilelayer for the map and store it into a variable
@@ -44,19 +44,14 @@ map.addControl(drawControl);
 
 //Variables used for handling the layer control
 var baseMap = { "OSM": osmLayer};
-var overlayMap = {"Route": route}
+var overlayMap = {"Route": route, "DrawnItems": drawnItems}
 
 // adds the layer control to the map
 L.control.layers(baseMap, overlayMap).addTo(map);
 
 // the function gets called every time the event (new reactangnle drawn) happens
 map.on('draw:created', function(event) {
-    drawnItems.addLayer(event.layer);
-    let intersections = turf.lineIntersect(Route_Uebung4, drawnItems.toGeoJSON());
-    console.log(intersections);
-
-
     // adds markers with weather information
-    addWeatherMarkersAtIntersections(intersections);
+    addWeatherMarkersAtIntersections(event);
 
  })
