@@ -100,7 +100,7 @@ function showWeatherAtLocation(weatherData, weatherImage) {
     document.getElementById("weatherDescription").innerHTML = weatherData.current.weather[0].description;
     document.getElementById("currentTemp").innerHTML = "Temperature: " + Math.round(weatherData.current.temp) + "°C";
     document.getElementById("feelsLikeTemp").innerHTML = "Feels-like: " + Math.round(weatherData.current.feels_like) + "°C";
-    document.getElementById("currentWindspeed").innerHTML = "Windspeed: " + weatherData.current.wind_speed + " m/s"
+    document.getElementById("currentWindspeed").innerHTML = "Windspeed: " + weatherData.current.wind_speed + " m/s";
     document.getElementById("currentWindDirection").innerHTML = "Wind direction: " + weatherData.current.wind_deg + "°";
     document.getElementById("currentHumidity").innerHTML = "Humidity: " + weatherData.current.humidity + " %";
     document.getElementById("currentClouds").innerHTML = "Cloudiness: " + weatherData.current.clouds + " %";

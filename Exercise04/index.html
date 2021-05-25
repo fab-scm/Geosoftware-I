@@ -3,20 +3,28 @@
         <meta charset="utf-8"/>
         <title>Geosoftware I</title>        
 
+        <!--Loading leaflet script and stylesheet-->
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
+        <!--Loading JQuery script-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
 
+        <!--Loading turf script-->
+        <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
+
         <script defer src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 
+        <!--Loading local stylesheets and scripts-->
         <link rel="stylesheet" href="style.css"/>
+        <script src="keys.js"></script>
+        <script src="Route_Uebung4.geojson" type="text/javascript"></script>
+        <script src="coordinates.js"></script>
+        <script defer src="map.js"></script>
         <script defer src="main.js"></script>
+        
     </head>
     <body>
-        <h1>Exercise 04</h1>
-        <p>by Fabian Schumacher</p>
-
         <div id="map"></div>  
     </body>
