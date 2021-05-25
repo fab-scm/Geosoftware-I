@@ -131,10 +131,10 @@ function getWeatherData(latitude, longitude, marker) {
         url: `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${openweatherAPIKey}`,
         method: "GET"
     })
-    .done(function(weatherData){
+    .done(function(weatherData){                                        // if the request was successfull
         getReadableLocation(latitude, longitude, marker, weatherData);
     })
-    .fail(function(xhr, status, errorThrown){
+    .fail(function(xhr, status, errorThrown){                           // if the request fails
         alert("error");
         console.dir(xhr)
         console.log(status)
@@ -158,10 +158,10 @@ function getReadableLocation(latitude, longitude, marker, weatherData) {
         url: `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxToken}`,
         method: "GET"
     })
-    .done(function(location){
+    .done(function(location){                                           // if the request was succesfull
         createWeatherMarkerPopup(marker, weatherData, location);
     })
-    .fail(function(xhr, status, errorThrown){
+    .fail(function(xhr, status, errorThrown){                           // if the request fails
         alert("error");
         console.dir(xhr)
         console.log(status)
