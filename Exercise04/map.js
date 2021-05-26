@@ -36,7 +36,7 @@ function createMap(htmlID = 'map', mapOptions = mapOptionsDefault) {
 /**
  * The functions adds a mapbox/openstreet tilelayer to the map with the osmTileLayerOptions
  * 
- * @param {*} mapObj - the Leaflet map object stored in the variable
+ * @param {L.Map} mapObj - the Leaflet map object stored in the variable
  * @returns - the tile layer, which will be added to map
  */
 function addTileLayer(mapObj) {
@@ -82,7 +82,7 @@ function calculateIntersections(event) {
  * createPositionMarkers(coordObj) with the Coordinate-object.
  *  
  * @param {GeoJSON object} intersections - FeatureCollection which holds the intersections of the reactangle with the given route
- * @param {*} i - index of the intersection in the FeatureCollection on which the function is currently calculating/working
+ * @param {integer} i - index of the intersection in the FeatureCollection on which the function is currently calculating/working
  */
 function addMarker(intersections, i){
     console.log(intersections)
@@ -122,9 +122,9 @@ function deleteCurrentMarkers(){
  * for the coordinates of the intersection(the marker). If the request was successfull it calls the getReadableLocation()-function
  * and provides it with the marker and the requested weatherData.
  * 
- * @param {*} latitude - latitude coordinate of the intersection
- * @param {*} longitude - longitude coordinate of the intersection
- * @param {*} marker - the marker currently "working" on
+ * @param {float} latitude - latitude coordinate of the intersection
+ * @param {float} longitude - longitude coordinate of the intersection
+ * @param {L.Marker} marker - the marker currently "working" on
  */
 function getWeatherData(latitude, longitude, marker) {
     $.ajax({
@@ -148,10 +148,10 @@ function getWeatherData(latitude, longitude, marker) {
  * the location of the intersection. If the request was successfull it calls the createWeatherMarkerPopup()-function
  * and provides it with the marker, the weatherData and the requested information about the location.
  * 
- * @param {*} latitude - latitude coordinate of the intersection
- * @param {*} longitude - longitude coordinate of the intersection
- * @param {*} marker - the marker currently "working" on
- * @param {*} weatherData - the weatherData requested in the getWeatherData()-function
+ * @param {float} latitude - latitude coordinate of the intersection
+ * @param {float} longitude - longitude coordinate of the intersection
+ * @param {L.Marker} marker - the marker currently "working" on
+ * @param {object} weatherData - the weatherData requested in the getWeatherData()-function
  */
 function getReadableLocation(latitude, longitude, marker, weatherData) {
     $.ajax({
@@ -174,8 +174,8 @@ function getReadableLocation(latitude, longitude, marker, weatherData) {
  * The function creates a leaflet Popup for the marker and fills it with the weather information and
  * a readable location description.
  * 
- * @param {*} result 
- * @param {*} marker 
+ * @param {object} result 
+ * @param {L.Marker} marker 
  */
 function createWeatherMarkerPopup(marker, weatherData, location){
 
