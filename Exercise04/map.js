@@ -36,7 +36,7 @@ function createMap(htmlID = 'map', mapOptions = mapOptionsDefault) {
 /**
  * The functions adds a mapbox/openstreet tilelayer to the map with the osmTileLayerOptions
  * 
- * @param {*} mapObj - the Leaflet map object stored in the variable
+ * @param {L.Map} mapObj - the Leaflet map object stored in the variable
  * @returns - the tile layer, which will be added to map
  */
 function addTileLayer(mapObj) {
@@ -82,7 +82,7 @@ function calculateIntersections(event) {
  * createPositionMarkers(coordObj) with the Coordinate-object.
  *  
  * @param {GeoJSON object} intersections - FeatureCollection which holds the intersections of the reactangle with the given route
- * @param {*} i - index of the intersection in the FeatureCollection on which the function is currently calculating/working
+ * @param {integer} i - index of the intersection in the FeatureCollection on which the function is currently calculating/working
  */
 function addMarker(intersections, i){
     console.log(intersections)
