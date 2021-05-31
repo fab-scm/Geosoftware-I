@@ -1,4 +1,4 @@
-/* CSS-setting used for*/
+/* CSS-settings used for screen-width bigger than 1024px*/
 @media screen and (min-width: 1024px){
     html {
         height: 100%;
@@ -42,7 +42,7 @@
     }
 }
 
-
+/* CSS-settings used for screen-width bigger than 536px and smaller than 1024px*/
 @media screen and (min-width: 537px) and (max-width: 1023px){
     html {
         height: 100%;
@@ -85,7 +85,7 @@
     }
 }
 
-
+/* CSS-settings used for screen-width smaller than 537px*/
 @media screen and (max-width: 536px){
     html {
         height: 100%;
