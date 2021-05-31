@@ -124,7 +124,7 @@ function deleteCurrentMarkers(){
  * 
  * @param {float} latitude - latitude coordinate of the intersection
  * @param {float} longitude - longitude coordinate of the intersection
- * @param {float} marker - the marker currently "working" on
+ * @param {L.Marker} marker - the marker currently "working" on
  */
 function getWeatherData(latitude, longitude, marker) {
     $.ajax({
@@ -188,7 +188,7 @@ function createWeatherMarkerPopup(marker, weatherData, location){
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
     // create Popup with the weather and location<s information
-    marker.bindPopup(  `<h3>${location.features[2].place_name}</h3>
+    marker.bindPopup(  `<h5>${location.features[2].place_name}</h5>
                         <p>${date.toLocaleDateString('en-EN', options)}</p>
                         <p><img src = ${weatherImage.src}></img></p>
                         <p>${weatherData.current.weather[0].description}</p>
