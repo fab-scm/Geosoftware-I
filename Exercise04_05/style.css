@@ -6,7 +6,6 @@
     
     body {
         padding-top: 60px;
-        padding-bottom: 25px;
         height: 100%;
     }
 
@@ -21,109 +20,34 @@
         margin-left: 50%;
     }
 
-    h5 {
+    p,h5 {
         text-align: center;
-    }
-    
-    p {
-        text-align: center;
-        color: rgb(0, 0, 0);
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    /* css property to customize the navbar */
-    .navbar-custom {
-        background-color: rgb(40, 57, 150);
-    }
-
-    #footer1 {
-        display: flex;
-        height: 25px;
     }
 }
 
-/* CSS-settings used for screen-width bigger than 536px and smaller than 1024px*/
-@media screen and (min-width: 537px) and (max-width: 1023px){
+/* CSS-settings smaller than 1024px*/
+@media screen and (max-width: 1023px){
     html {
         height: 100%;
     }
     
     body {
         padding-top: 60px;
-        padding-bottom: 25px;
         height: 100%;
     }
 
     #map { 
-        height: 80%; 
+        height: 70%; 
         width: 100%
     }
 
     #infos {
-        height:20%;
+        height:30%;
         width: 100%
     }
     
-    h5 {
+    p,h5 {
         text-align: center;
     }
     
-    p {
-        text-align: center;
-        color: rgb(0, 0, 0);
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    /* css property to customize the navbar */
-    .navbar-custom {
-        background-color: rgb(40, 57, 150);
-    }
-
-    #footer1 {
-        display: flex;
-        height: 25px;
-    }
-}
-
-/* CSS-settings used for screen-width smaller than 537px*/
-@media screen and (max-width: 536px){
-    html {
-        height: 100%;
-    }
-    
-    body {
-        padding-top: 60px;
-        padding-bottom: 50px;
-        height: 100%;
-    }
-
-    #map { 
-        height: 80%; 
-        width: 100%
-    }
-
-    #infos {
-        height:20%;
-        width: 100%
-    }
-    
-    h5 {
-        text-align: center;
-    }
-    
-    p {
-        text-align: center;
-        color: rgb(0, 0, 0);
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    /* css property to customize the navbar */
-    .navbar-custom {
-        background-color: rgb(40, 57, 150);
-    }
-
-    #footer1 {
-        display: flex;
-        height: 50px;
-    }
 }
