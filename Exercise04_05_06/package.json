@@ -1,0 +1,16 @@
+{
+  "name": "exercise04_05_06",
+  "version": "1.0.0",
+  "description": "",
+  "main": "expressServer.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test",
+    "start": "nodemon expressServer.js"
+  },
+  "author": "Fabian Schumacher",
+  "license": "ISC"
+}
