@@ -1,0 +1,22 @@
+doctype html
+head
+  title User List
+  link(rel='stylesheet', href='/stylesheets/style.css')
+body
+    h1 User List
+    p #{userlist[0].username}
+    p #{userlist[0].email}
+    p #{userlist[1].username}
+    p #{userlist[1].email}
+    p #{userlist[2].username}
+    p #{userlist[2].email}
+    p #{userlist.length}
+    ul#list
+        script(defer='').
+            var list = '';
+            for (i = 0; i < #{userlist.length}; i++) {
+                consol.log('Hallo');
+            list += '<li><a href="mailto:' + #{userlist[i].email} + '">' + #{userlist[i].username} + '</a></li>';
+            }
+            document.getElementbyId('list').innerHTML = list;
+
