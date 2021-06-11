@@ -8,6 +8,16 @@ app.get('/', (req, res) =>
     res.sendFile(__dirname + "/public/index.html");
 })
 
+app.get('/routes', (req, res) => 
+{
+    res.sendFile(__dirname + "/public/index.html");
+})
+
+app.get('/changeRoutes', (req, res) =>
+{
+    res.send('Hier kann die Route verändert werden')
+})
+
 app.use(express.static('public'))
 
 
