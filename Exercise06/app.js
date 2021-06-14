@@ -4,10 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-// connect to the mongoDB
-var monk = require('monk');
-var db = monk('localhost:27017/nodetest1');
-
 var homeRouter = require('./routes/1_routes');
 var manageRouter = require('./routes/2_manageRoutes');
 
@@ -19,15 +15,10 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Make our db accessible to our router
-app.use(function(req,res,next){
-  req.db = db;
-  next();
-});
 
 app.use('/', homeRouter);
 app.use('/home', homeRouter)

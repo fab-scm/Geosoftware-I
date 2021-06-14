@@ -1,4 +1,31 @@
 extends 0_layout
 
 block content
-    p Hello World!
+    #manageRoutes
+        h1 #{title}
+        form(id='formAddRoute' name='addroute' method='post' action='/manageRoutes/addRoute' enctype='multipart/form-data')
+            input(id='uploadroute' type='file' placeholder='route' name='route')
+            button(id='btnSubmit' type='submit') Submit
+
+        table.table.table-striped
+            tr
+                th
+                th Name
+                th RouteID
+                th
+            
+            each n, index in tableData
+                tr
+                    td
+                        input(type='checkbox' id=n._id)
+                    td= n.features[0].properties.name
+                    td= n._id
+                    td
+                        input(id=n._id+index type='text')
+                        button(onclick=`renameRoute('${n._id}', '${index}')`) rename
+                    
+
+        button(id='deleteButton') Delete
+        
+        block scripts 
+            script(src='/javascripts/manageRoutes.js', defer)
