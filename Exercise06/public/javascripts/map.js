@@ -51,9 +51,9 @@ function addTileLayer(mapObj) {
  * 
  * @param {L.Leaflet.Draw.Event} event
  */
-function addWeatherMarkersAtIntersections(event){
+function addWeatherMarkersAtIntersections(event, route){
     deleteCurrentMarkers();
-    let intersections = calculateIntersections(event);
+    let intersections = calculateIntersections(event, route);
     for (let i = 0; i < intersections.features.length; i++) {
         addMarker(intersections, i);
     }
@@ -70,9 +70,10 @@ function addWeatherMarkersAtIntersections(event){
  * @param {GeoJSON object} Route_Uebung4 - FeatureCollection that holds a MultiLineString stored 
  * @returns - the intersction/s as GeoJSON
  */
-function calculateIntersections(event) {
+function calculateIntersections(event, route) {
+    console.log(Route_Sueddeutschland);
     drawnItems.addLayer(event.layer);
-    return turf.lineIntersect(Route_Uebung4, drawnItems.toGeoJSON());
+    return turf.lineIntersect(route, drawnItems.toGeoJSON());
 }
 
 

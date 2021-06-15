@@ -31,9 +31,10 @@ var drawControl = new L.Control.Draw({
 
 
 // Variable that holds the given route
-var route = L.geoJson(Route_Uebung4.features[0].geometry);
+var routeUnprocessed = Route_Sueddeutschland;
 
 // adds the route to the map
+var route = L.geoJson(routeUnprocessed.geometry);
 route.addTo(map);
 
 // adds the layer with drawn items to the map
@@ -44,7 +45,7 @@ map.addControl(drawControl);
 
 //Variables used for handling the layer control
 var baseMap = { "OSM": osmLayer};
-var overlayMap = {"Route": route, "DrawnItems": drawnItems}
+var overlayMap = {"Route": route}
 
 // adds the layer control to the map
 L.control.layers(baseMap, overlayMap).addTo(map);
@@ -52,6 +53,7 @@ L.control.layers(baseMap, overlayMap).addTo(map);
 // the function gets called every time the event (new reactangnle drawn) happens
 map.on('draw:created', function(event) {
     // adds markers with weather information
-    addWeatherMarkersAtIntersections(event);
+    addWeatherMarkersAtIntersections(event, routeUnprocessed);
+    console.log(route);
 
  })

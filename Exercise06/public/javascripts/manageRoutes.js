@@ -1,15 +1,12 @@
 "use strict"
 
-var renameButton = document.getElementById('renameButton');
+// variables that store the 
 var deleteButton = document.getElementById('deleteButton');
 
-/*renameButton.addEventListener('click', function(){
-    var checkedRoutes = getCheckedRoutes();
-    //renameCheckedRoutes(checkedRoutes);
-});*/
 
-
-
+/**
+ * 
+ */
 deleteButton.addEventListener('click', function(){
     var checkedRoutes = getCheckedRoutes();
     //deleteCheckedRoutes(checkedRoutes);
@@ -33,9 +30,10 @@ deleteButton.addEventListener('click', function(){
 
 
 
-
-
-
+/**
+ * 
+ * @returns 
+ */
 function getCheckedRoutes() {
     var obj = {};
     obj.routesChecked=[];
@@ -52,27 +50,13 @@ function getCheckedRoutes() {
 }
 
 
-function deleteCheckedRoutes(checkedRoutes) {
-    client.connect(function(err)
-    {
-        if (err) throw err;
-
-        console.log('Connected successfully to server');
-
-        const db = client.db(dbName);
-        const collection = db.collection(collectionName);
-        for (var i=0; i<checkedRoutes.length; i++){
-            var myquery = { "_id": ObjectId(checkedRoutes[i])}
-            collection.deleteOne(myquery, function(err, data)
-            {
-                if (err) throw err;
-                console.log('One document deleted');
-                db.close();
-            })
-        }
-    })
-}
-
+/**
+ * The function gets called everytime the Rename-Button of the in the DB stored
+ * route is clicked.
+ * 
+ * @param {String} id 
+ * @param {String} index 
+ */
 function renameRoute(id, index) {
 
     var obj = {};

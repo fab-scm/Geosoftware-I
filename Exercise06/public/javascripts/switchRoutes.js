@@ -1,29 +1,21 @@
-const MongoClient = require('mongodb').MongoClient
-const assert = require('assert')
+$("#routes").change(function() {
+        var id = $("#routes option:selected").attr("id");
+        $.ajax({
+            type: "GET",
+            url: "/selectRoute?id=" + id,
+            //dataType: "json",
+            success: function(){
+                alert('success');
+            },
+            error: function(){
+                alert('error')
+            }
+        })
+        .done()
+});
 
-const url = 'mongodb://localhost:27017' // connection URL
-const client = new MongoClient(url) // mongodb client
-const dbName = 'Exercise06DB' // database name
-const collectionName = 'routes' // collection name
+var button = document.getElementById('button');
 
-client.connect(function(err)
-  {
-    assert.equal(null, err);
-
-    console.log('Connected successfully to server');
-
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
-
-    // find some documents
-    collection.find({}).toArray(function(err, data)
-    {
-      assert.equal(err, null);
-      console.log('Found the following records...');
-      console.log(data[0].features);
-      res.render('2_manageRoutes', {title: 'Manage Routes', data: data});
-    
-    })
-  })
-
-
+/*$("routes").on('change', function () {
+    alert($(this).find('option:selected').attr('id'));
+});*/

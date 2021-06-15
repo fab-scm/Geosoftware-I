@@ -1,5 +1,8 @@
 extends 0_layout
 
+block scripts 
+    script(src='/javascripts/manageRoutes.js', defer)
+
 block content
     #manageRoutes
         h1 #{title}
@@ -18,7 +21,7 @@ block content
                 tr
                     td
                         input(type='checkbox' id=n._id)
-                    td= n.features[0].properties.name
+                    td= n.properties.name
                     td= n._id
                     td
                         input(id=n._id+index type='text')
@@ -26,6 +29,3 @@ block content
                     
 
         button(id='deleteButton') Delete
-        
-        block scripts 
-            script(src='/javascripts/manageRoutes.js', defer)
