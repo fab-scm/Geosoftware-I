@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // querystring
-const querystring = require('querystring');
+const querystring = require('query-string');
 
 // assert
 const assert = require('assert')
@@ -50,6 +50,18 @@ router.get('/selectRoute', function(req, res) {
   //var id = urlParams.has('id');
   console.log(idObj);
   res.send('/');
+
+  const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+  // find some documents
+  /*collection.find({ "_id" : idObj./selectRoute?id }).toArray(function(err, data)
+  {
+    assert.equal(err, null);
+    console.log('Found the following records...');
+    console.log(data);
+    res.render('1_routes', {title: 'Available Routes:', routes: data});
+  })*/
 })
 
 module.exports = router;
