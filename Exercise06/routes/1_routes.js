@@ -2,7 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
+// fs
 const fs = require('fs');
+
+// path
 const path = require('path');
 
 // querystring
@@ -26,7 +29,13 @@ const client = new MongoClient(url) // mongodb client
 const dbName = 'Exercise06DB' // database name
 const collectionName = 'routes' // collection name
 
-/* GET route listing. */
+
+/**
+ * GET route listing.
+ * Connects to the mongoDB and finds all the routes stored in the used collection, renders the pug view
+ * and sends information to the pug-view where they get displayed as options in select tag.
+ * 
+ *  */ 
 router.get('/', function(req, res, next) {
 
   // connect to the mongodb database and retrieve all routes
@@ -50,6 +59,16 @@ router.get('/', function(req, res, next) {
   })
 });
 
+
+/**
+ * POST selected Route to the file system.
+ * Uses the information sent by the client to change the route selected for the clientside leaflet map.
+ * Therefore the fs overwrites the file which is used for the initialization of the all the map-functions.
+ * and redirects to the homepage, so that the map is initialized with the selected route.
+ * The route is queried from the mongoDB collection and used paresed to string afterwards so that
+ * it can be used to overwrite the current routeDB.geojson
+ * 
+ */
 router.post('/selectRoute', function(req, res) {
   const postObj = req.body;
   console.log(postObj.id);
@@ -67,22 +86,14 @@ router.post('/selectRoute', function(req, res) {
     console.log(data[0]);
     var routeJSONString = JSON.stringify(data[0]);
 
-    var filepath = path.resolve(__dirname, '../public/javascripts/routeDB.geojson');
+    var filepath = path.resolve(__dirname, '../public/geojson/routeDB.geojson');
 
     fs.writeFile(filepath, `var routeDB = ${routeJSONString}`, function(err) {
       if (err) throw err;
       console.log('Replaced');
     })
-
+    res.redirect('/');
   });
-  // console.log(route);
-  /*{
-    assert.equal(err, null);
-    console.log('Found the following records...');
-    console.log(data);
-    //res.send(data[0]);
-    //res.redirect('/');
-  })*/
 })
 
 module.exports = router;

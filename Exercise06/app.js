@@ -1,12 +1,28 @@
+//////////////////
+// load modules //
+//////////////////
+
+// http-errors
 var createError = require('http-errors');
+
+// express
 var express = require('express');
-var path = require('path');
+
+// path
+const path = require('path');
+
+//  cookie-parser
 var cookieParser = require('cookie-parser');
+
+// morgan
 var logger = require('morgan');
 
+// define router
 var homeRouter = require('./routes/1_routes');
 var manageRouter = require('./routes/2_manageRoutes');
+var validFilesRouter = require('./routes/3_validFiles');
 
+// define app
 var app = express();
 
 // view engine setup
@@ -20,9 +36,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// set routes
 app.use('/', homeRouter);
 app.use('/home', homeRouter)
 app.use('/manageRoutes', manageRouter);
+app.use('/validFiles', validFilesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

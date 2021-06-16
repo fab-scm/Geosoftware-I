@@ -1,3 +1,5 @@
+// load modules
+
 // express
 const express = require('express');
 const router = express.Router();
@@ -18,7 +20,15 @@ const client = new MongoClient(url) // mongodb client
 const dbName = 'Exercise06DB' // database name
 const collectionName = 'routes' // collection name
 
-/* GET route listing. */
+
+// define routes
+
+/**
+ * GET route listing.
+ * Connects to the mongoDB and finds all the routes stored in the used collection, renders the pug view
+ * and sends information to the pug-view where they get displayed as in a table that shows the name and the id of the routes in the DB.
+ * 
+ */
 router.get('/', function(req, res, next) {
 
   // connect to the mongodb database and retrieve all routes
@@ -43,7 +53,13 @@ router.get('/', function(req, res, next) {
 });
 
 
-/* POST to Add User Service */
+/**
+ * POST to add a route.
+ * The POST recieves the upload from the uploadfield 'route' and inserts it into the DB.
+ * In the process the file gets validated by various if clauses to check if the map-app can work with it.
+ * It gets tested on the file-extension, which must be of type geojson, on the form of the file and if it is a valid geojson
+ * and last but not least on the specific form that is required for the map-app.
+ */
 router.post('/addRoute', upload.single('route'), function(req, res) {
 
   // Set our internal DB variable
@@ -100,7 +116,12 @@ router.post('/addRoute', upload.single('route'), function(req, res) {
 
 
 
-/* POST to delete Route Service */
+/**
+ * POST to delete route.
+ * The Post recieves an object with the ids of all checked routes that should be deleted from the database.
+ * It then iterates over the array and sends a delete query to DB with the specific id to delete.
+ * 
+ *  */ 
 router.post('/delete', function(req, res) {
   var routesObj = JSON.parse(req.body.o);
   console.log(routesObj.routesChecked);
@@ -119,13 +140,17 @@ router.post('/delete', function(req, res) {
           if (err) throw err;
           console.log('One document deleted');
       })
-    }
+    }  
   }
-  
 });
 
 
-/* POST to rename Route Service */
+/** 
+ * POST to rename a route.
+ * The Post recieves an object with the id, index and name of a route that should be renamed in the database.
+ * It then filters the right object from the database and sets the name to newname with $set.
+ * 
+ */
 router.post('/rename', function(req, res) {
   var routesObj = JSON.parse(req.body.o);
   console.log(routesObj);
@@ -146,6 +171,13 @@ router.post('/rename', function(req, res) {
 });
 
 
+/**
+ * The function checks if the type of the uploaded file is .geojson and returns true if it is
+ * and false if not.
+ * 
+ * @param {String} fileName - filename with extension
+ * @returns Boolean - true if type geojson and false if not
+ */
 function checkFileExtension(fileName) {
   let extension = fileName.split('.').pop();
   if (extension == "geojson"){

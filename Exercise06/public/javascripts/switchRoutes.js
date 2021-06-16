@@ -1,49 +1,33 @@
-var submitButton = document.getElementById('submit');
-var currentRoute = document.getElementById('currentRoute');
+"use strict"
 
+// variables that store the necessary HTML-objects
+var submitButton = document.getElementById('submit');
+
+
+
+/**
+ * EventListener that listens to a click event on the submitButton.
+ * When the button gets clicked it first gets the id and value(name) of the selected option in the form(id=routes).
+ * After that an ajax-POST-request is made which send the id of the selected option (also id of the route in the DB)
+ * to the server where the right route is loaded from the database to overwrite the routeDB.geojson in the filesystem.
+ * 
+ */
 submitButton.addEventListener('click', function() {
     var id = $("#routes option:selected").attr("id");
     var name = $("#routes option:selected").attr("value");
     $.ajax({
         type: "POST",
         url: "/selectRoute",
+        async: false,
         dataType: "text",
         data: {
             id: id
         },
         success: function(data){
-            alert('success');
+            console.log('success');
         },
         error: function(){
             alert('error')
         }
-    }).done(window.location.href = "/")
-
-    //document.getElementById(id).selected = 'selected'
-    currentRoute.innerHTML(`Die aktuelle ausgewählte Route ist ${name}`)
+    })
 });
-
-
-/*$("#routes").change(function() {
-        var id = $("#routes option:selected").attr("id");
-        $.ajax({
-            type: "POST",
-            url: "/selectRoute",
-            dataType: "text",
-            data: {
-                id: id
-            },
-            success: function(data){
-                alert('success');
-            },
-            error: function(){
-                alert('error')
-            }
-        })
-});*/
-
-//var button = document.getElementById('button');
-
-/*$("routes").on('change', function () {
-    alert($(this).find('option:selected').attr('id'));
-});*/
