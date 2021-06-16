@@ -94,5 +94,5 @@ function renameRoute(id, index) {
             alert('error')
         }
     })
-    .done(window.location.href = "/manageRoutes"})
+    .done(window.location.href = "/manageRoutes")
 }
