@@ -15,19 +15,22 @@ var submitButton = document.getElementById('submit');
 submitButton.addEventListener('click', function() {
     var id = $("#routes option:selected").attr("id");
     var name = $("#routes option:selected").attr("value");
-    $.ajax({
-        type: "POST",
-        url: "/selectRoute",
-        async: false,
-        dataType: "text",
-        data: {
-            id: id
-        },
-        success: function(data){
-            console.log('success');
-        },
-        error: function(){
-            alert('error')
-        }
-    })
+    if(name != '0') {
+        $.ajax({
+            type: "POST",
+            url: "/selectRoute",
+            async: false,
+            dataType: "text",
+            data: {
+                id: id,
+                name: name
+            },
+            success: function(data){
+                console.log('success');
+            },
+            error: function(){
+                alert('error')
+            }
+        })
+    }    
 });
