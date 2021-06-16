@@ -31,7 +31,7 @@ var drawControl = new L.Control.Draw({
 
 
 // Variable that holds the given route
-var routeUnprocessed = Route_Sueddeutschland;
+var routeUnprocessed = routeDB;
 
 // adds the route to the map
 var route = L.geoJson(routeUnprocessed.geometry);

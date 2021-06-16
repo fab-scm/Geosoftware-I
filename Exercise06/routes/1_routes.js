@@ -2,6 +2,9 @@
 const express = require('express');
 const router = express.Router();
 
+const fs = require('fs');
+const path = require('path');
+
 // querystring
 const querystring = require('query-string');
 
@@ -14,7 +17,9 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage});
 
 // mongoDB
-const mongodb = require('mongodb')
+const mongodb = require('mongodb');
+const { URLSearchParams } = require('url');
+const { start } = require('repl');
 const MongoClient = mongodb.MongoClient
 const url = 'mongodb://localhost:27017' // connection URL
 const client = new MongoClient(url) // mongodb client
@@ -45,22 +50,38 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/selectRoute', function(req, res) {
-  const idObj = querystring.parse(req.url);
-  //var id = urlParams.has('id');
-  console.log(idObj);
-  res.send('/');
+router.post('/selectRoute', function(req, res) {
+  const postObj = req.body;
+  console.log(postObj.id);
 
   const db = client.db(dbName);
-    const collection = db.collection(collectionName);
+  const collection = db.collection(collectionName);
 
   // find some documents
-  /*collection.find({ "_id" : idObj./selectRoute?id }).toArray(function(err, data)
+  var myfilter = {"_id": mongodb.ObjectId(postObj.id)};
+  console.log(myfilter);
+  
+  collection.find(myfilter).toArray(function(err, data)
   {
+    assert.equal(err, null);
+    console.log(data[0]);
+    var routeJSONString = JSON.stringify(data[0]);
+
+    var filepath = path.resolve(__dirname, '../public/javascripts/routeDB.geojson');
+
+    fs.writeFile(filepath, `var routeDB = ${routeJSONString}`, function(err) {
+      if (err) throw err;
+      console.log('Replaced');
+    })
+
+  });
+  // console.log(route);
+  /*{
     assert.equal(err, null);
     console.log('Found the following records...');
     console.log(data);
-    res.render('1_routes', {title: 'Available Routes:', routes: data});
+    //res.send(data[0]);
+    //res.redirect('/');
   })*/
 })
 

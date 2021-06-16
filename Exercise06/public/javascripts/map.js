@@ -71,7 +71,6 @@ function addWeatherMarkersAtIntersections(event, route){
  * @returns - the intersction/s as GeoJSON
  */
 function calculateIntersections(event, route) {
-    console.log(Route_Sueddeutschland);
     drawnItems.addLayer(event.layer);
     return turf.lineIntersect(route, drawnItems.toGeoJSON());
 }

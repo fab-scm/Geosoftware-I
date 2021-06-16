@@ -15,8 +15,7 @@ block scripts
 
     // Loading scripts
     script(src='/javascripts/keys.js')
-    script(src='/javascripts/Route_Uebung4.geojson' type='text/javascript')
-    script(src='/javascripts/Route_Sueddeutschland.geojson' type='text/javascript')
+    script(src='/javascripts/routeDB.geojson' type='text/javascript')
     script(src='/javascripts/coordinates.js')
     script(defer='' src='/javascripts/switchRoutes.js')
     script(defer='' src='/javascripts/map.js')
@@ -27,13 +26,14 @@ block content
     #map
     // Information section
     #infos
-        form(id="formSelectRoute" name="routes" method="get" action="/home/selectRoute" enctype='multipart/form-data')
+        form(id="formSelectRoute" name="routes" method="get" enctype='multipart/form-data')
             label(for="routes") #{title}  
             select(name="routes" id="routes")
                 each n, index in routes
                     option(value=n.properties.name id=n._id) #{n.properties.name}
-            input(type="submit" value="Submit" onclick="getIdOfSelectedOption()")
-        button(id="button") Gib ID
+            input(id="submit" type="submit" value="Submit")
+        
+        p(id="currentRoute")
     
 
 
