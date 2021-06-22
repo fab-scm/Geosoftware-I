@@ -72,6 +72,7 @@ router.post('/addRoute', upload.single('route'), function(req, res) {
     if (checkFileExtension(multerObject.originalname)) {
 
       try {
+        console.log(multerObject);
         var inputRouteJSON = JSON.parse(multerObject.buffer);
         console.log(inputRouteJSON);
       }

@@ -43,7 +43,7 @@ deleteButton.addEventListener('click', function(){
 function getCheckedRoutes() {
     var obj = {};
     obj.routesChecked=[];
-
+    
     $("input:checkbox").each(function(){
         var $this = $(this);
 
