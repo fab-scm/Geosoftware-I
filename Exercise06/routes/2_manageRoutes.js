@@ -15,7 +15,7 @@ const upload = multer({ storage: storage});
 // mongoDB
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
-const url = 'mongodb://localhost:27017' // connection URL
+const url = 'mongodb://mongodbservice:27017' // connection URL
 const client = new MongoClient(url) // mongodb client
 const dbName = 'Exercise06DB' // database name
 const collectionName = 'routes' // collection name
