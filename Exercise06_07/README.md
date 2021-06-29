@@ -1,6 +1,4 @@
-#################
 # Exercise06_07 #
-#################
 
 Link to the image of the node part of the application:
 https://hub.docker.com/r/fabscm/exercise07node
