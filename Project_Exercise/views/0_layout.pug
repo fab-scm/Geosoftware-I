@@ -25,16 +25,15 @@ Body
     // Navbar
     nav.navbar.navbar-expand-md.navbar.navbar-dark.bg-dark.fixed-top
       .container-fluid
-        a.navbar-brand(href='/') Intersect your Weather
+        a.navbar-brand(href='/') Stadtführer Münster
         // Hamburger button
         button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarCollapse')
           span.navbar-toggler-icon
         // Navbar content
         #navbarCollapse.collapse.navbar-collapse
           .navbar-nav
-            a.nav-item.nav-link.active(href='/') Map
-            a.nav-item.nav-link.active(href='/manageRoutes') Manage Routes
-            a.nav-item.nav-link.active(href='/validFiles') Valid Files
+            a.nav-item.nav-link.active(href='/') Übersichtskarte
+            a.nav-item.nav-link.active(href='/manageRoutes') Sehenswürdigkeiten/Touren bearbeiten
           // Searchbar
           form.form-inline.ml-auto
             input.form-control.mr-sm-2(type='text' placeholder='Search')
@@ -50,21 +49,18 @@ Body
       .row
         // Grid column
         .col-lg-6.col-md-12.mb-4.mb-md-0
-          h5.text-uppercase Intersect your Weather
+          h5.text-uppercase Stadtführer Münster
           p
-            | This website provides you an interactive possillity to get information about the weather
-            | on a given route. On the map you can draw an rectangle and get weather information at all the intersections
-            | of the rectangle with the given route. The weather information is provided by the openWeatherAPI.
-        // Grid column
+            | Kurze Beschreibung der Website
         // Grid column
         #contact.col-lg-6.col-md-12.mb-4.mb-md-0
-          h5.text-uppercase Contact
+          h5.text-uppercase Kontakt
           p
             i.fa.fa-home.me-3
             |  M&uuml;nster, 48149, DE
           p
             i.fa.fa-envelope.me-3
-            |  fab-scm@example.com
+            |  stadtfuehrer@stadt-muenster.de
           p
             i.fa.fa-phone.me-3
             |  + 01 234 567 88
@@ -77,5 +73,5 @@ Body
     // Copyright
     .text-center.p-3(style='background-color: rgba(0, 0, 0, 0.2);')
       | &copy; 2021 Copyright:
-      a.text-dark(href='https://github.com/fab-scm') fab-scm
+      a.text-dark(href='https://github.com/fab-scm')  Stadt Münster
     // Copyright
