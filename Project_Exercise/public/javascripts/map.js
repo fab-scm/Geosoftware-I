@@ -6,7 +6,7 @@
 "use strict"
 
 // Basemap options
- let osmTileLayerOptions = {
+ let mapboxTileLayerOptions = {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox/streets-v11',
@@ -14,6 +14,9 @@
     zoomOffset: -1,
     accessToken: 'your.mapbox.access.token'
 };
+
+
+
 
 // Default map options
 let mapOptionsDefault = {
@@ -39,6 +42,10 @@ function createMap(htmlID = 'map', mapOptions = mapOptionsDefault) {
  * @param {L.Map} mapObj - the Leaflet map object stored in the variable
  * @returns - the tile layer, which will be added to map
  */
-function addTileLayer(mapObj) {
-    return new L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`, osmTileLayerOptions).addTo(mapObj);
+function addMapboxTileLayer(mapObj) {
+    return new L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`, mapboxTileLayerOptions).addTo(mapObj);
+}
+
+function addOSMTileLayer(mapObj) {
+    return new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="http://osm.org/copyright%22%3EOpenStreetMap</a> contributors'}).addTo(mapObj);
 }

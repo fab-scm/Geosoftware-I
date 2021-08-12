@@ -1,0 +1,17 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+    {
+        "type": "Feature",
+        "properties": {
+            "Name": "Historisches Rathaus",
+            "URL": "https://en.wikipedia.org/wiki/Historical_City_Hall_of_M%C3%BCnster",
+            "Beschreibung": ""
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": 
+                [7.627979815006256, 51.96171464749894]
+        }
+    }]
+}
