@@ -42,8 +42,29 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/addSight', function(req, res, next) {
-  var sightData = req.body;
+  var sightDataString = req.body.o;
+  var sightData = JSON.parse(sightDataString);
   console.log(sightData);
+
+  client.connect(function(err){
+
+    assert.equal(null, err);
+
+    console.log('Connected successfully to server');
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    collection.insertOne(sightData, function(err, result){
+      assert.equal(err, null);
+      
+      console.log(`Inserted the sight successfully ${result.insertedCount} document into the collection`)
+      res.render('2_edit');
+    })
+  })
+
+  //res.redirect("/edit");
 })
+
 
 module.exports = router;
