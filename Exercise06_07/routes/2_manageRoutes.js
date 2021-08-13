@@ -47,7 +47,9 @@ router.get('/', function(req, res, next) {
       assert.equal(err, null);
       console.log('Found the following records...');
       // console.log(data);
+      
       res.render('2_manageRoutes', {title: 'Manage Routes:', tableData: data});
+      
     })
   })
 });

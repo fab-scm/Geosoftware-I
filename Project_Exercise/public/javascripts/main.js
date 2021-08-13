@@ -45,7 +45,7 @@ map.on('draw:created', function(event) {
     console.log(event)
     var tempMarker = event.layer.addTo(map);
     //drawnItems.addLayer(tempMarker);
-    var popupContent =    '<form role="form" id="form" enctype="multipart/form-data" class = "form-horizontal" onsubmit="addMarker()">'+
+    var popupContent =    '<form role="form" id="form" enctype="multipart/form-data" class = "form-horizontal" method="post" action="/edit/addSight">'+
                             '<div class="form-group">'+
                                 '<label class="label col-sm-5"><strong>Name: </strong></label>'+
                                 '<input type="text" class="form" rows="1" id="name" name="name"></input>'+
@@ -60,7 +60,7 @@ map.on('draw:created', function(event) {
                             '</div>'+
                             '<div class="form-group">'+
                                 '<div style="text-align:center;" class="col-xs-4 col-xs-offset-2"><button type="button" class="btn btn-light">Abbrechen</button></div>'+
-                                '<div style="text-align:center;" class="col-xs-4"><button type="submit" value="submit" class="btn btn-outline-success trigger-submit">Speichern</button></div>'+
+                                '<div style="text-align:center;" class="col-xs-4"><button type="submit" class="btn btn-outline-success trigger-submit">Speichern</button></div>'+
                                 '<div style="text-align:center;" class="col-xs-4"><button type="submit" value="submit" class="btn btn-outline-danger trigger-submit">Löschen</button></div>'+
                             '</div>'+
                         '</form>';
@@ -72,36 +72,79 @@ map.on('draw:created', function(event) {
     map.on('click', function(e){
         tempMarker.remove();
     })
+    console.log(tempMarker);
 
-    $("#form").submit(function(e){
-        drawnItems.addLayer(tempMarker);
-        console.log("submitted");
-        console.log(e);
-        //console.log("didnt submit");
-        //var date =$("#date").val();
-        //console.log(date);
-        console.log(drawnItems);
-    });
+    function updateDatabase() {
+        var name = document.getElementById("name").value;
+        var url = document.getElementById("url").value;
+        var beschreibung = document.getElementById("beschreibung").value;
+        var lat = event.layer._latlng.lat;
+        var lng = event.layer._latlng.lng;
+        var type = event.layerType;
+    
+        console.log(lat);
+        console.log(lng);
+        console.log(type);
+        let entryDB = createGeoJSON(name, url, beschreibung, lat, lng);
+        console.log(entryDB);
+    }
+
 
  })
+
+
+ 
+
+//updateDatabase();
 
 if (window.location.pathname == "/edit") {
     // adds the draw control to the map
     map.addControl(drawControl);
+    console.log(sights);
+    //let sightsGeoJSON = JSON.parse(sights);
+    //console.log(sightsGeoJSON);
+}
 
-    $.ajax({
-        type: "GET",
-        url: "/edit",
-        dataType: "json",
-        data: {
-            o: objectDataString
-        },
-        success: function (data) {
-            alert('success');
-        },
-        error: function () {
-            alert('error')
+
+
+function createGeoJSON(name, url, beschreibung, lat, lng, type) {
+    if (type == "marker") {
+        let geoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "Name": name,
+                    "URL": url,
+                    "Beschreibung": beschreibung
+                },
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": 
+                        [lng, lat]
+                }
+            }]
         }
-    })
-    .done(window.location.href = "/manageRoutes")
+    }
+    else {
+        let geoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+            {
+                "type": "Feature",
+                "properties": {
+                    "Name": name,
+                    "URL": url,
+                    "Beschreibung": beschreibung
+                },
+                "geometry": {
+                    "type": type,
+                    "coordinates": 
+                        [lng, lat]
+                }
+            }]
+        }
+    }
+    return geoJSON;
 }
