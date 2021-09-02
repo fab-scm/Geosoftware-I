@@ -59,11 +59,10 @@ router.post('/addSight', function(req, res, next) {
       assert.equal(err, null);
       
       console.log(`Inserted the sight successfully ${result.insertedCount} document into the collection`)
-      res.render('2_edit');
+      //res.render('2_edit');
     })
+    res.redirect("/edit");
   })
-
-  //res.redirect("/edit");
 })
 
 

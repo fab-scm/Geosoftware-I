@@ -18,7 +18,10 @@
  
  // FeatureGroup to store the markers
  let markers = new L.FeatureGroup();
- 
+
+ // Load all sights from MongoDB 
+ addSights(sights);
+
  // New draw control for the given map, in which only the reactangle tool is provided
  var drawControl = new L.Control.Draw({
      draw: {
@@ -111,18 +114,18 @@
          $.ajax({
              type: "POST",
              url: "/edit/addSight",
-             dataType: "json",
+             //dataType: "json",
              data: {
                  o: objectDataString
              },
              success: function (data) {
-                 alert('success');
+                window.location.href = "/edit";
              },
              error: function () {
                  alert('error')
              }
          })
-         .done()
+         .done(/**/)
      })
  
      /*function updateDatabase() {
@@ -152,10 +155,32 @@
      // adds the draw control to the map
      map.addControl(drawControl);
      console.log(sights);
+     //addSights(sights);
      //let sightsGeoJSON = JSON.parse(sights);
      //console.log(sightsGeoJSON);
  }
+
+ function addSights(sights) {
+     deleteCurrentMarkers();
+     for (let i = 0; i <sights.length; i++) {
+         if (sights[i].features[0].geometry.type == "Point") {
+             var marker = L.marker([sights[i].features[0].geometry.coordinates[1], sights[i].features[0].geometry.coordinates[0]]);
+             marker.bindPopup(  `<h5>Infos</h5>
+                        <p>Name: ${sights[i].features[0].properties.Name}</p>
+                        <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
+                        <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
+             markers.addLayer(marker);
+         }
+
+     }
+     map.addLayer(markers);
+ }
  
+
+ function deleteCurrentMarkers() {
+    map.removeLayer(markers);
+    markers = new L.FeatureGroup();
+}
  
  
  function createGeoJSONString(name, url, beschreibung, lat, lng, type) {
