@@ -1,15 +1,7 @@
 extends 0_layout
 
 block scripts
-    
-    // Loading leaflet script and stylesheet
-    link(rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' integrity='sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==' crossorigin='')
-    script(src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js' integrity='sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==' crossorigin='')
-    
-    // Loading the leaflet draw plugin
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js')
-    
+
     // Loading turf script
     script(src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js')
 
@@ -24,5 +16,24 @@ block content
     #map
     // Information section
     #infos
+        form(id='formAddSightInputFile' name='addsight' method='post' action='/edit/addSightInputFile' enctype='multipart/form-data')
+            input(id='uploadSightInputFile' type='file' placeholder='sight' name='sightInputFile')
+            input(id='uploadSightInputText' type='text' placeholder='Insert GeoJSON string' name='sightInputText')
+            button(id='btnSubmit' type='submit') Submit
+
+        table.table.table-striped
+            tr
+                th
+                th Name
+                th URL
+            
+            each n, index in sightData
+                tr
+                    td
+                        input(type='checkbox' id=n._id)
+                    td= n.features[0].properties.Name
+                    td= n.features[0].properties.URL        
+
+        button(id='deleteButton') Delete
 
     

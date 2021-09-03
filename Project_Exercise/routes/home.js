@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
       console.log('Found the following records...');
       console.log(data);
   
-      res.render('1_home', {data: data});
+      res.render('1_home', {sightData: data});
 
     })
   })

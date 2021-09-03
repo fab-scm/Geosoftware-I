@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
       console.log('Found the following records...');
       console.log(data);
   
-      res.render('2_edit', {data: data});
+      res.render('2_edit', {sightData: data});
 
     })
   })
