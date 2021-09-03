@@ -82,6 +82,14 @@
          }
          var type = event.layerType;
           console.log(coords);
+
+        /*if (beschreibung == null && url.includes('wikipedia')) {
+            $.ajax({
+                url: 
+                method: "GET"
+            })
+        }*/
+        
  
          let objectDataString = createGeoJSONString(name, url, beschreibung, coords, type);
          console.log(objectDataString);
