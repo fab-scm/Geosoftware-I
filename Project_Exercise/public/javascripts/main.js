@@ -21,7 +21,7 @@
 
  // Load all sights from MongoDB 
  addSights(sights);
- console.log(sights);
+ //console.log(sights);
 
  // New draw control for the given map, in which only the reactangle tool is provided
  var drawControl = new L.Control.Draw({
@@ -71,44 +71,72 @@
      let button = document.getElementById("send");
  
      button.addEventListener('click', function(){
-         var name = document.getElementById("name").value;
-         var url = document.getElementById("url").value;
-         var beschreibung = document.getElementById("beschreibung").value;
-         if(event.layerType == "marker") {
-             var coords = event.layer._latlng;
-         }
-         else {
-            var coords = event.layer._latlngs[0];
-         }
-         var type = event.layerType;
-          console.log(coords);
+        var name = document.getElementById("name").value;
+        var url = document.getElementById("url").value;
+        var beschreibung = document.getElementById("beschreibung").value;
+        if(event.layerType == "marker") {
+            var coords = event.layer._latlng;
+        }
+        else {
+        var coords = event.layer._latlngs[0];
+        }
+        var type = event.layerType;
+        console.log(coords);
 
-        /*if (beschreibung == null && url.includes('wikipedia')) {
+
+        if (name == "") {
+            alert("Bitte geben Sie der Sehenswürdigkeit einen Namen.")
+        }
+        else {
+            
+            var wikiSightName = getSightNameFromURL(url);
+
+            if (url.includes('wikipedia')) {
+                $.ajax({
+                    async: false,
+                    url: 'http://de.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=true&exsentences=3&explaintext=true&titles=' + wikiSightName + '&origin=*',
+                    method: "GET",
+                    success: function(data){
+                        console.log(data);
+                        var key = Object.keys(data.query.pages)[0];
+                        var article = data.query.pages[key].extract;
+                        console.log(article);
+                        beschreibung = article;
+                    },
+                    error: function () {
+                        alert('error')
+                    }
+                })
+                .done()
+            }
+            else {
+                if (beschreibung == "") {
+                    beschreibung = "Keine Informationen vorhanden" //möglicherweise Sync-Problem, teilw. wird der String gesetzt und teilw. nicht
+                } 
+            }
+            
+    
+            let objectDataString = createGeoJSONString(name, url, beschreibung, coords, type);
+            console.log(objectDataString);
+    
             $.ajax({
-                url: 
-                method: "GET"
+                type: "POST",
+                url: "/edit/addSight",
+                //dataType: "json",
+                data: {
+                    o: objectDataString
+                },
+                success: function (data) {
+                    window.location.href = "/edit";
+                    
+                },
+                error: function () {
+                    alert('error')
+                }
             })
-        }*/
-        
- 
-         let objectDataString = createGeoJSONString(name, url, beschreibung, coords, type);
-         console.log(objectDataString);
- 
-         $.ajax({
-             type: "POST",
-             url: "/edit/addSight",
-             //dataType: "json",
-             data: {
-                 o: objectDataString
-             },
-             success: function (data) {
-                window.location.href = "/edit";
-             },
-             error: function () {
-                 alert('error')
-             }
-         })
-         .done(/**/)
+            .done(/**/)
+        }
+
      }) 
   })
  
@@ -116,12 +144,20 @@
  if (window.location.pathname == "/edit") {
      // adds the draw control to the map
      map.addControl(drawControl);
-     console.log(sights);
+     //console.log(sights);
  }
 
+ function getSightNameFromURL(url) {
+     var urlArray = url.split('/');
+     var sightName = urlArray[4];
+     console.log(sightName);
+     return sightName;
+ }
+
+ 
 
  function addSights(sights) {
-     console.log(sights)
+     //console.log(sights)
      deleteCurrentMarkers();
      for (let i = 0; i <sights.length; i++) {
          if (sights[i].features[0].geometry.type == "Point") {
@@ -132,7 +168,7 @@
                     return new L.LatLng(coords[1], coords[0] /*coords[2]*/);
                 }
             });
-            console.log(s._layers);
+            //console.log(s._layers);
             var marker = L.marker([s._layers[s._leaflet_id-1]._latlng.lat, s._layers[s._leaflet_id-1]._latlng.lng]);
             marker.bindPopup(  `<h5>Infos</h5>
                         <p>Name: ${sights[i].features[0].properties.Name}</p>
@@ -148,9 +184,9 @@
                     return new L.LatLng(coords[1], coords[0] /*coords[2]*/);
                 }
             });
-            console.log(s._layers[s._leaflet_id-1]._latlngs[0]);
+            //console.log(s._layers[s._leaflet_id-1]._latlngs[0]);
             var coordinatesFinished = extractCoordinatesLatLng(s._layers[s._leaflet_id-1]._latlngs[0]);
-            console.log(coordinatesFinished);
+            //console.log(coordinatesFinished);
             var polygon = L.polygon(coordinatesFinished);
             polygon.bindPopup(  `<h5>Infos</h5>
                        <p>Name: ${sights[i].features[0].properties.Name}</p>
@@ -192,7 +228,7 @@
      }
      else {
          var coordinates = extractCoordinatesLngLat(coords);
-         console.log(coordinates);
+         //console.log(coordinates);
          let geoJSON = `{
              "type": "FeatureCollection",
              "features": [

@@ -16,6 +16,7 @@ deleteButton.addEventListener('click', function(){
     var checkedSights = getCheckedSights();
     var objectDataString = JSON.stringify(checkedSights);
     $.ajax({
+        async: true,
         type: "POST",
         url: "/edit/delete",
         dataType: "json",

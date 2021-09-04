@@ -5,6 +5,12 @@ var router = express.Router();
 // assert
 const assert = require('assert')
 
+// axios
+const axios = require('axios');
+
+// got
+const got = require('got');
+
 // multer
 const multer = require ('multer');
 const storage = multer.memoryStorage();
@@ -64,8 +70,9 @@ router.post('/addSight', function(req, res, next) {
       assert.equal(err, null);
       
       console.log(`Inserted the sight successfully ${result.insertedCount} document into the collection`)
-      //res.render('2_edit');
+      
     })
+    //res.render('2_edit');
     res.redirect("/edit");
   })
 })
@@ -100,17 +107,46 @@ router.post('/addSight', function(req, res, next) {
 
       if (inputFileJSON.type == "FeatureCollection") {
         if (inputFileJSON.features[0].geometry.type == "Point" || inputFileJSON.features[0].geometry.type == "Polygon") {
-          // Submit to the DB
-          collection.insertOne(inputFileJSON, function (err, doc) {
+          
 
-            if (err) {
-              // If it failed, return error
-              res.send("There was a problem adding the information to the database.");
+          (async () => {
+            try {
+              
+              if (inputFileJSON.features[0].properties.URL.includes('wikipedia')) {
+                var wikiSightName = getSightNameFromURL(inputFileJSON.features[0].properties.URL);
+                const response = await axios.get('http://de.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=true&exsentences=3&explaintext=true&titles=' + wikiSightName + '&origin=*', { json: true });
+                console.log(response.data);
+                var key = Object.keys(response.data.query.pages)[0];
+                var article = response.data.query.pages[key].extract;
+                console.log(article);
+                inputFileJSON.features[0].properties.Beschreibung = article;
+                console.log(inputFileJSON.features[0].properties);
+              }
+              else if (inputFileJSON.features[0].properties.Beschreibung == "") {
+                  inputFileJSON.features[0].properties.Beschreibung = "Keine Informationen vorhanden"
+              }
+              
+
+
+              // Submit to the DB
+              collection.insertOne(inputFileJSON, function (err, doc) {
+
+                if (err) {
+                  // If it failed, return error
+                  res.send("There was a problem adding the information to the database.");
+                }
+                else {
+                  res.redirect("/edit");
+                }
+              })
+
+
+            } catch (error) {
+              console.log(error.response.body);
             }
-            else {
-              res.redirect("/edit");
-            }
-          })
+          })();
+
+          
         }
         else {
           res.send("Uploaded GeoJSON is not of type 'Point' or 'Polygon'. Please Check your GeoJSON. You can get further information in the 'Valid Files' section")
@@ -162,16 +198,44 @@ router.post('/addSight', function(req, res, next) {
       if (inputTextJSON.type == "FeatureCollection") {
         if (inputTextJSON.features[0].geometry.type == "Point" || inputTextJSON.features[0].geometry.type == "Polygon") {
           // Submit to the DB
-          collection.insertOne(inputTextJSON, function (err, doc) {
 
-            if (err) {
-              // If it failed, return error
-              res.send("There was a problem adding the information to the database.");
+          (async () => {
+            try {
+              
+              if (inputTextJSON.features[0].properties.URL.includes('wikipedia')) {
+                var wikiSightName = getSightNameFromURL(inputTextJSON.features[0].properties.URL);
+                const response = await axios.get('http://de.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=true&exsentences=3&explaintext=true&titles=' + wikiSightName + '&origin=*', { json: true });
+                console.log(response.data);
+                var key = Object.keys(response.data.query.pages)[0];
+                var article = response.data.query.pages[key].extract;
+                console.log(article);
+                inputTextJSON.features[0].properties.Beschreibung = article;
+                console.log(inputTextJSON.features[0].properties);
+              }
+              else if (inputTextJSON.features[0].properties.Beschreibung == "") {
+                  inputTextJSON.features[0].properties.Beschreibung = "Keine Informationen vorhanden"
+              }
+              
+
+
+              // Submit to the DB
+              collection.insertOne(inputTextJSON, function (err, doc) {
+
+                if (err) {
+                  // If it failed, return error
+                  res.send("There was a problem adding the information to the database.");
+                }
+                else {
+                  res.redirect("/edit");
+                }
+              })
+
+
+            } catch (error) {
+              console.log(error.response.body);
             }
-            else {
-              res.redirect("/edit");
-            }
-          })
+          })();
+
         }
         else {
           res.send("Uploaded GeoJSON is not of type 'Point' or 'Polygon'. Please Check your GeoJSON. You can get further information in the 'Valid Files' section")
@@ -209,12 +273,21 @@ router.post('/addSight', function(req, res, next) {
       console.log(myquery);
       collection.deleteOne(myquery, function(err, data)
       {
-          if (err) throw err;
+          //if (err) throw err;
           console.log('One document deleted');
+          //res.redirect("/edit");
       })
     }  
   }
 });
+
+
+function getSightNameFromURL(url) {
+  var urlArray = url.split('/');
+  var sightName = urlArray[4];
+  console.log(sightName);
+  return sightName;
+}
 
 
 
