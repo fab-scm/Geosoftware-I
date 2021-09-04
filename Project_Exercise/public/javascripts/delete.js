@@ -16,21 +16,22 @@ deleteButton.addEventListener('click', function(){
     var checkedSights = getCheckedSights();
     var objectDataString = JSON.stringify(checkedSights);
     $.ajax({
-        async: true,
+        async: false,
         type: "POST",
         url: "/edit/delete",
-        dataType: "json",
+        //dataType: "json",
         data: {
             o: objectDataString
         },
         success: function (data) {
-            alert('success');
+            //alert('success');
+            window.location.href = "/edit"
         },
         error: function () {
             alert('error')
         }
     })
-    .done(window.location.href = "/edit")
+    .done()
 })
 
 

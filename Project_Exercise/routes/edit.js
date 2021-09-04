@@ -273,10 +273,12 @@ router.post('/addSight', function(req, res, next) {
       console.log(myquery);
       collection.deleteOne(myquery, function(err, data)
       {
+          assert.equal(err, null);
           //if (err) throw err;
           console.log('One document deleted');
-          //res.redirect("/edit");
+          
       })
+      res.redirect("/edit");
     }  
   }
 });
