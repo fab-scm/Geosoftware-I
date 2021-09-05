@@ -38,7 +38,7 @@ deleteButton.addEventListener('click', function(){
 
 /**
  * The function iterates through all HTML-objects from type input:checkbox
- *  and puts all ids of the checked boxes into one array which is stored in an js object.
+ * and puts all ids of the checked boxes into one array which is stored in an js object.
  * 
  * @returns {object} the object that contains an array with the ids of all the checked boxes in the HTML-document
  */

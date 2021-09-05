@@ -44,33 +44,49 @@
  // adds the layer control to the map
  L.control.layers(baseMap).addTo(map);
  
- // the function gets called every time the event (new reactangnle drawn) happens
+
+ // Event-listener that listens to a leaflet draw event. The function gets called
+ // every time the event (new marker or polygon drawn) happens.
  map.on('draw:created', function(event) {
-     //console.log(event.layer._latlng);
-     console.log(event)
-     var tempMarker = event.layer.addTo(map);
-     //drawnItems.addLayer(tempMarker);
-     var popupContent =      '<div class="col-sm-4">Name<input class="form-control" id="name" type="text" name="name" /></div>' +
-                             '<div class="col-sm-4">URL<input class="form-control" id="url" type="text" name="url" /></div>' +
-                             '<div class="col-sm-4">Beschreibung<input class="form-control" id="beschreibung" type="text" name="beschreibung" /></div>' +
-                             '</div><button id="send" class="btn btn-primary mb-2" type="submit">Send</button>';
- 
-                         
-     tempMarker.bindPopup(popupContent,{
-         keepInView: false,
-         closeButton: true
-     }).openPopup();
+    //console.log(event.layer._latlng);
+    console.log(event)
      
-     map.on('click', function(e){
+    // add a temporal marker or polygon to that map
+    var tempMarker = event.layer.addTo(map);
+    //drawnItems.addLayer(tempMarker);
+    
+    // html-form, used for marker-/polygon-popup
+    var popupContent =      '<div class="col-sm-4">Name<input class="form-control" id="name" type="text" name="name" /></div>' +
+                            '<div class="col-sm-4">URL<input class="form-control" id="url" type="text" name="url" /></div>' +
+                            '<div class="col-sm-4">Beschreibung<input class="form-control" id="beschreibung" type="text" name="beschreibung" /></div>' +
+                            '</div><button id="send" class="btn btn-primary mb-2" type="submit">Send</button>';
+ 
+
+    // binds a popup to every drawn marker or polygon, that contains a form where you can enter a name, url and description to submit              
+    tempMarker.bindPopup(popupContent,{
+        keepInView: false,
+        closeButton: true
+    }).openPopup();
+     
+    // Event-listener, that listens to a leaflet 'click' event. The function that gets called removes the current tempMarker.
+    map.on('click', function(e){
          tempMarker.remove();
-     })
-     console.log(tempMarker);
-     console.log(event.layerType);
+    })
+    //console.log(tempMarker);
+    //console.log(event.layerType);
  
+    // variable that contains the the "send"-button
+    let button = document.getElementById("send");
  
-     let button = document.getElementById("send");
- 
-     button.addEventListener('click', function(){
+    /**
+     * Event-listener that listens to a 'click'-event on the send-button. The function that gets called when the event happens
+     * takes all the values of the popup-form, validates the entries, builds a geojson-string and sends it to the server.
+     * Validation:  - Check if there is a name entry
+     *              - Check if the url entry contains a wikipedia url. 
+     *                  -> If yes, the wikipedia-API is used to get the first 3 sentences of the wikipedia article as the sight description.
+     *                  -> If not, use the entered description or set 'Keine Informationen vorhanden' as description, if not descriptionis given. 
+     */ 
+    button.addEventListener('click', function(){
         var name = document.getElementById("name").value;
         var url = document.getElementById("url").value;
         var beschreibung = document.getElementById("beschreibung").value;
