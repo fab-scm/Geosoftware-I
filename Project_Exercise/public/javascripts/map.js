@@ -49,3 +49,67 @@ function addMapboxTileLayer(mapObj) {
 function addOSMTileLayer(mapObj) {
     return new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="http://osm.org/copyright%22%3EOpenStreetMap</a> contributors'}).addTo(mapObj);
 }
+
+
+
+function addSightsFromDB(sights) {
+    //console.log(sights)
+    deleteCurrentMarkers();
+    for (let i = 0; i <sights.length; i++) {
+        if (sights[i].features[0].geometry.type == "Point") {
+           var s = L.geoJSON(sights[i], {
+               coordsToLatLng: function (coords) {
+                   //                    latitude , longitude, altitude
+                   //return new L.LatLng(coords[1], coords[0], coords[2]); //Normal behavior
+                   return new L.LatLng(coords[1], coords[0] /*coords[2]*/);
+               }
+           });
+           //console.log(s._layers);
+           var marker = L.marker([s._layers[s._leaflet_id-1]._latlng.lat, s._layers[s._leaflet_id-1]._latlng.lng]);
+           marker.bindPopup(  `<h5>Infos</h5>
+                       <p>Name: ${sights[i].features[0].properties.Name}</p>
+                       <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
+                       <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
+           markers.addLayer(marker);
+        }
+        if (sights[i].features[0].geometry.type == "Polygon") {
+           var s = L.geoJSON(sights[i], {
+               coordsToLatLng: function (coords) {
+                   //                    latitude , longitude, altitude
+                   //return new L.LatLng(coords[1], coords[0], coords[2]); //Normal behavior
+                   return new L.LatLng(coords[1], coords[0] /*coords[2]*/);
+               }
+           });
+           //console.log(s._layers[s._leaflet_id-1]._latlngs[0]);
+           var coordinatesFinished = extractCoordinatesLatLng(s._layers[s._leaflet_id-1]._latlngs[0]);
+           //console.log(coordinatesFinished);
+           var polygon = L.polygon(coordinatesFinished);
+           polygon.bindPopup(  `<h5>Infos</h5>
+                      <p>Name: ${sights[i].features[0].properties.Name}</p>
+                      <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
+                      <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
+           markers.addLayer(polygon);
+       }
+    }
+    map.addLayer(markers);
+}
+
+
+
+function extractCoordinatesLatLng(coords) {
+    var coordinates = [];
+    for (let i = 0; i < coords.length; i++) {
+        var coord = [coords[i].lat, coords[i].lng];
+        coordinates.push(coord);
+    }
+    coordinates.push([coords[0].lat, coords[0].lng]); 
+    return coordinates;
+}
+
+
+
+
+function deleteCurrentMarkers() {
+    map.removeLayer(markers);
+    markers = new L.FeatureGroup();
+ }

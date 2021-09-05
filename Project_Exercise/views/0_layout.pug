@@ -23,8 +23,16 @@ head
   <link rel="stylesheet" href='/leaflet-draw/dist/leaflet.draw.css'/>
   <script src='/leaflet-draw/dist/leaflet.draw.js'></script>
 
+  // Loading turf script
+    script(src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js')
+
   // Loading local stylesheet
   link(rel='stylesheet' href='/stylesheets/style.css')
+
+  // Loading local scripts
+  script(src='/javascripts/keys.js')
+  script(defer='' src='/javascripts/map.js')
+  script(defer='' src='/javascripts/main.js')
 
   block scripts
 
