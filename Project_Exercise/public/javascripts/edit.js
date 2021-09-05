@@ -133,7 +133,7 @@
  })
 
 
- // variables that store the necessary HTML-objects
+ // variables that store the delete-Button HTML-object
 var deleteButton = document.getElementById('deleteButton');
 
  /**
