@@ -134,7 +134,7 @@
 
 
  // variables that store the delete-Button HTML-object
-var deleteButton = document.getElementById('deleteButton');
+ var deleteButton = document.getElementById('deleteButton');
 
  /**
   * Eventlistener that listens for a click event on the deleteButton. 
