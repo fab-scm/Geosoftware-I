@@ -1,4 +1,7 @@
-// Event-listener that listens to a leaflet draw event. The function gets called
+ "use strict"
+
+
+ // Event-listener that listens to a leaflet draw event. The function gets called
  // every time the event (new marker or polygon drawn) happens.
  map.on('draw:created', function(event) {
     //console.log(event.layer._latlng);
@@ -9,10 +12,31 @@
     //drawnItems.addLayer(tempMarker);
     
     // html-form, used for marker-/polygon-popup
-    var popupContent =      '<div class="col-sm-4">Name<input class="form-control" id="name" type="text" name="name" /></div>' +
-                            '<div class="col-sm-4">URL<input class="form-control" id="url" type="text" name="url" /></div>' +
-                            '<div class="col-sm-4">Beschreibung<input class="form-control" id="beschreibung" type="text" name="beschreibung" /></div>' +
-                            '</div><button id="send" class="btn btn-primary mb-2" type="submit">Send</button>';
+    var popupContent =      '<form id="popup-form">\
+                                <p>\
+                                    <div>\
+                                            <label for="name">Name:</label>\
+                                            <input id="name" class="popup-input" type="text" name="name" style="float: right;"/>\
+                                    </div>\
+                                </p>\
+                                <p>\
+                                    <div style="padding-top: 10px;">\
+                                        <label for="beschreibung">Beschreibung:</label>\
+                                        <input id="beschreibung" class="popup-input" type="text" name="beschreibung" style="float: right;"/>\
+                                    </div>\
+                                </p>\
+                                <p>\
+                                    <div style="padding-top: 10px;">\
+                                        <label for="url">URL:</label>\
+                                        <input id="url" class="popup-input" type="text" name="url" style="float: right;"/>\
+                                    </div>\
+                                </p>\
+                                <p>\
+                                    <div style="padding-top: 10px;">\
+                                        <button id="send" type="button">Send</button>\
+                                    </div>\
+                                </p>\
+                            </form>';
  
 
     // binds a popup to every drawn marker or polygon, that contains a form where you can enter a name, url and description to submit              
@@ -109,6 +133,63 @@
  })
 
 
+ // variables that store the necessary HTML-objects
+var deleteButton = document.getElementById('deleteButton');
+
+ /**
+  * Eventlistener that listens for a click event on the deleteButton. 
+  * If the button is clicked the callback function is executed which sends 
+  * an ajax-POST-request to the express server. 
+  * The data sent to the server are the id's of the routes which should be deleted from the database.
+  * After the ajax-request is done the page gets refreshed.
+  * 
+  */
+ deleteButton.addEventListener('click', function(){
+    var checkedSights = getCheckedSights();
+    var objectDataString = JSON.stringify(checkedSights);
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: "/edit/delete",
+        //dataType: "json",
+        data: {
+            o: objectDataString
+        },
+        success: function (data) {
+            //alert('success');
+            window.location.href = "/edit"
+        },
+        error: function () {
+            alert('error')
+        }
+    })
+    .done()
+ })
+
+
+
+ /**
+  * The function iterates through all HTML-objects from type input:checkbox
+  * and puts all ids of the checked boxes into one array which is stored in an js object.
+  * 
+  * @returns {object} the object that contains an array with the ids of all the checked boxes in the HTML-document
+  */
+ function getCheckedSights() {
+    var obj = {};
+    obj.sightsChecked=[];
+    
+    $("input:checkbox").each(function(){
+        var $this = $(this);
+
+        if($this.is(":checked")){
+            obj.sightsChecked.push($this.attr("id"));
+        }
+    });
+    console.log(obj);
+    return obj;
+ }
+
+
  function createGeoJSONString(name, url, beschreibung, coords, type) {
     if (type == "marker") {
         let geoJSON =`{
@@ -151,27 +232,24 @@
         }`
         return geoJSON;
     }
-}
+ }
 
 
 
-function extractCoordinatesLngLat(coords) {
+ function extractCoordinatesLngLat(coords) {
     var coordinates = `[[`;
     for (let i = 0; i < coords.length; i++) {
         coordinates += `[${coords[i].lng}, ${coords[i].lat}],`;
     }
     coordinates += `[${coords[0].lng}, ${coords[0].lat}]]]`;
     return coordinates;
-}
-
-
-
+ }
 
  
 
-  function getSightNameFromURL(url) {
+ function getSightNameFromURL(url) {
     var urlArray = url.split('/');
     var sightName = urlArray[4];
     console.log(sightName);
     return sightName;
-}
+ }

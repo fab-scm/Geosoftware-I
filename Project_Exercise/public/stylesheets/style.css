@@ -20,14 +20,6 @@
         margin-left: 50%;
     }
 
-    #manageRoutes {
-        height: 100%;
-    }
-
-    #formAddRoute {
-        margin: 10px;
-    }
-
     #deleteButton {
         margin: 10px;
     }
@@ -58,13 +50,6 @@
         width: 100%
     }
 
-    #manageRoutes {
-        height: 100%;
-    }
-
-    #formAddRoute {
-        margin: 10px;
-    }
 
     #deleteButton {
         margin: 10px;
