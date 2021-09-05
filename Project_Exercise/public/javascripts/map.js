@@ -1,12 +1,11 @@
 /**
- * The script provides functions to create, manipulate and add thngs to leaflet maps
- * @author Fabian Schumacher
- * @version 4.0.1
+ * The script provides functions to create, manipulate and add things to leaflet maps.
+ * @author Fabian Schumacher, Thalis Goldschmidt
  */
 "use strict"
 
-// Basemap options
- let mapboxTileLayerOptions = {
+// basemap options
+let mapboxTileLayerOptions = {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox/streets-v11',
@@ -15,17 +14,13 @@
     accessToken: 'your.mapbox.access.token'
 };
 
-
-
-
-// Default map options
+// default map options
 let mapOptionsDefault = {
     drawControl: false
 }
 
-
 /**
- * The function creates the leaflet map with the view set to Germany with a zoom level, so that the whole country can be seen in the map window.
+ * The function creates the leaflet map with the view set to Muensters city center.
  * 
  * @param {String} htmlID - the HTML-id of the division in which the map is displayed
  * @param {Object} mapOptionsDefault - the default map options used for the initialization
@@ -35,9 +30,8 @@ function createMap(htmlID = 'map', mapOptions = mapOptionsDefault) {
      return L.map(htmlID, mapOptions).setView([51.9617, 7.6252], 15);
 }
 
-
 /**
- * The functions adds a mapbox/openstreet tilelayer to the map with the osmTileLayerOptions
+ * The functions add a mapbox/openstreet tilelayer to the map with the osmTileLayerOptions.
  * 
  * @param {L.Map} mapObj - the Leaflet map object stored in the variable
  * @returns - the tile layer, which will be added to map
@@ -50,22 +44,23 @@ function addOSMTileLayer(mapObj) {
     return new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="http://osm.org/copyright%22%3EOpenStreetMap</a> contributors'}).addTo(mapObj);
 }
 
-
-
+/**
+ * This funtion loads all sights from the database to display them in the map.
+ * 
+ * @param {geoJSON} sights - sights as geojson
+ */
 function addSightsFromDB(sights) {
-    //console.log(sights)
     deleteCurrentMarkers();
     for (let i = 0; i <sights.length; i++) {
         if (sights[i].features[0].geometry.type == "Point") {
            var s = L.geoJSON(sights[i], {
+               //swaps geojson coordinates from [lng, lat] to [lat, lng] 
                coordsToLatLng: function (coords) {
-                   //                    latitude , longitude, altitude
-                   //return new L.LatLng(coords[1], coords[0], coords[2]); //Normal behavior
-                   return new L.LatLng(coords[1], coords[0] /*coords[2]*/);
+                   return new L.LatLng(coords[1], coords[0]);
                }
            });
-           //console.log(s._layers);
            var marker = L.marker([s._layers[s._leaflet_id-1]._latlng.lat, s._layers[s._leaflet_id-1]._latlng.lng]);
+           //binds popup with all necessary informations to marker
            marker.bindPopup(  `<h5>Infos</h5>
                        <p>Name: ${sights[i].features[0].properties.Name}</p>
                        <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
@@ -74,15 +69,13 @@ function addSightsFromDB(sights) {
         }
         if (sights[i].features[0].geometry.type == "Polygon") {
            var s = L.geoJSON(sights[i], {
+               //swaps geojson coordinates from [lng, lat] to [lat, lng] 
                coordsToLatLng: function (coords) {
-                   //                    latitude , longitude, altitude
-                   //return new L.LatLng(coords[1], coords[0], coords[2]); //Normal behavior
-                   return new L.LatLng(coords[1], coords[0] /*coords[2]*/);
+                   return new L.LatLng(coords[1], coords[0]);
                }
            });
-           //console.log(s._layers[s._leaflet_id-1]._latlngs[0]);
+           // builds array
            var coordinatesFinished = extractCoordinatesLatLng(s._layers[s._leaflet_id-1]._latlngs[0]);
-           //console.log(coordinatesFinished);
            var polygon = L.polygon(coordinatesFinished);
            polygon.bindPopup(  `<h5>Infos</h5>
                       <p>Name: ${sights[i].features[0].properties.Name}</p>
@@ -95,7 +88,12 @@ function addSightsFromDB(sights) {
 }
 
 
-
+/**
+ * This function builds an array of coordinate arrays from an array of coordinate objects.
+ * 
+ * @param {[[lat,lng], ...]} coords 
+ * @returns - array of coordinates
+ */
 function extractCoordinatesLatLng(coords) {
     var coordinates = [];
     for (let i = 0; i < coords.length; i++) {
@@ -107,8 +105,9 @@ function extractCoordinatesLatLng(coords) {
 }
 
 
-
-
+/**
+ * Function, that removes current markers or polygons and resets the markers featuregroup.
+ */
 function deleteCurrentMarkers() {
     map.removeLayer(markers);
     markers = new L.FeatureGroup();

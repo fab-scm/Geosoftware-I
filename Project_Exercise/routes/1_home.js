@@ -12,7 +12,11 @@ const client = new MongoClient(url) // mongodb client
 const dbName = 'ProjectDB' // database name
 const collectionName = 'sights' // collection name
 
-/* GET home page. */
+/**
+ * GET sights for listing.
+ * Connects to the mongoDB and finds all the routes stored in the used collection, renders the pug view
+ * and sends information to the pug-view where they get displayed as options in select tag.
+ */
 router.get('/', function(req, res, next) {
   client.connect(function(err)
   {
