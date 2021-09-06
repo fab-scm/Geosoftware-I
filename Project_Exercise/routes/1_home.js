@@ -14,8 +14,8 @@ const collectionName = 'sights' // collection name
 
 /**
  * GET sights for listing.
- * Connects to the mongoDB and finds all the routes stored in the used collection, renders the pug view
- * and sends information to the pug-view where they get displayed as options in select tag.
+ * Connects to the mongoDB and finds all the sights stored in the used collection
+ * and sends the information about the sights to the pug-view where they are processed to get displayed.
  */
 router.get('/', function(req, res, next) {
   client.connect(function(err)

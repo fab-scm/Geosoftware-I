@@ -143,23 +143,26 @@
   */
  deleteButton.addEventListener('click', function(){
     var checkedSights = getCheckedSights();
-    var objectDataString = JSON.stringify(checkedSights);
-    // Ajax request that sends information about the sights that should be deleted from the database to the server.
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: "/edit/delete",
-        data: {
-            o: objectDataString
-        },
-        success: function (data) {
-            window.location.href = "/edit"
-        },
-        error: function () {
-            alert('error')
-        }
-    })
-    .done()
+    console.log(checkedSights.sightsChecked);
+    if (checkedSights.sightsChecked.length != 0){
+        var objectDataString = JSON.stringify(checkedSights);
+        // Ajax request that sends information about the sights that should be deleted from the database to the server.
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "/edit/delete",
+            data: {
+                o: objectDataString
+            },
+            success: function (data) {
+                window.location.href = "/edit"
+            },
+            error: function () {
+                alert('error')
+            }
+        })
+        .done()
+    }
  })
 
  /**
