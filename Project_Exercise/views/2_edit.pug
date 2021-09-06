@@ -3,7 +3,8 @@ extends 0_layout
 block scripts
 
     // Loading scripts
-    script(defer='' src='/javascripts/edit.js')
+    script(defer='' src='/javascripts/editSights.js')
+    script(defer='' src='/javascripts/editTours.js')
     
 
 block content 
@@ -27,10 +28,13 @@ block content
             each n, index in sightData
                 tr
                     td
-                        input(type='checkbox' id=n._id)
+                        input(type='checkbox' class='chb' id=n._id)
                     td= n.features[0].properties.Name
                     td= n.features[0].properties.URL        
 
-        button(id='deleteButton') Delete
+        button(id='deleteButton') Löschen
+
+        input(id='tourName' type='text' placeholder='Tour Name' name='tourName')
+        button(id='erstelleTourButton') Erstelle Tour
 
     

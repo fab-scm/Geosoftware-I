@@ -143,7 +143,6 @@
   */
  deleteButton.addEventListener('click', function(){
     var checkedSights = getCheckedSights();
-    console.log(checkedSights.sightsChecked);
     if (checkedSights.sightsChecked.length != 0){
         var objectDataString = JSON.stringify(checkedSights);
         // Ajax request that sends information about the sights that should be deleted from the database to the server.

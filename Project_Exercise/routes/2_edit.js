@@ -19,7 +19,8 @@ const MongoClient = mongodb.MongoClient
 const url = 'mongodb://localhost:27017' // connection URL
 const client = new MongoClient(url) // mongodb client
 const dbName = 'ProjectDB' // database name
-const collectionName = 'sights' // collection name
+const collectionNameSights = 'sights' // collection name
+const collectionNameTours = 'tours' // collection name
 
 // define routes
 
@@ -36,7 +37,7 @@ router.get('/', function(req, res, next) {
     console.log('Connected successfully to server');
 
     const db = client.db(dbName);
-    const collection = db.collection(collectionName);
+    const collection = db.collection(collectionNameSights);
 
     // find some documents
     collection.find({}).toArray(function(err, data)
@@ -68,7 +69,7 @@ router.post('/addSight', function(req, res, next) {
     console.log('Connected successfully to server');
 
     const db = client.db(dbName);
-    const collection = db.collection(collectionName);
+    const collection = db.collection(collectionNameSights);
 
     collection.insertOne(sightData, function(err, result){
       assert.equal(err, null);
@@ -90,7 +91,7 @@ router.post('/addSight', function(req, res, next) {
 
   // set our internal DB variable
   const db = client.db(dbName);
-  const collection = db.collection(collectionName);
+  const collection = db.collection(collectionNameSights);
 
   // get our form values. These rely on the "name" attributes
   var multerObject = req.file;
@@ -180,7 +181,7 @@ router.post('/addSight', function(req, res, next) {
 
   // set our internal DB variable
   const db = client.db(dbName);
-  const collection = db.collection(collectionName);
+  const collection = db.collection(collectionNameSights);
 
   // get our form values. These rely on the "name" attributes
   var multerObject = req.body;
@@ -262,7 +263,7 @@ router.post('/addSight', function(req, res, next) {
  router.post('/delete', function(req, res) {
   var sightsObj = JSON.parse(req.body.o);
   const db = client.db(dbName);
-  const collection = db.collection(collectionName);
+  const collection = db.collection(collectionNameSights);
   if (sightsObj.sightsChecked.length > 0) {
     for (var i=0; i<sightsObj.sightsChecked.length; i++) {
       var myquery = {"_id": mongodb.ObjectId(sightsObj.sightsChecked[i])}
@@ -276,6 +277,7 @@ router.post('/addSight', function(req, res, next) {
     }  
   }
 });
+
 
 /**
  * This function retrieves the name of a sight when a wikipedia url is given.
@@ -305,6 +307,50 @@ function getSightNameFromURL(url) {
       return false;
   }
 };
+
+
+/**
+ * POST to insert sights into the database.
+ * Gets all the necessary information (from the form) about a sight from a ajax call and stores it in the database.
+ * Validation on the data happens on the client sight.
+ */
+ router.post('/addTour', function(req, res, next) {
+  var tourData = req.body;
+  console.log(tourData);
+
+  client.connect(function(err){
+
+    assert.equal(null, err);
+
+    console.log('Connected successfully to server');
+
+    const db = client.db(dbName);
+    const collectionSights = db.collection(collectionNameSights);
+    const collectionTours = db.collection(collectionNameTours);
+
+    var tourArray = [];
+
+    // find some documents
+    for (let i = 0; i < array.length; i++) {
+      var tourStopp = collectionSights.find({"_id": tourData.items[i]});
+      tourArray.push(tourStopp)
+    }
+
+    let tour = {};
+    tour.name = tourData.name;
+    tour.items = tourArray;
+    
+
+    collectionTours.insertOne(tour, function(err, result){
+      assert.equal(err, null);
+      
+      console.log(`Inserted the sight successfully ${result.insertedCount} document into the collection`)
+      
+    })
+    res.redirect("/edit");
+  })
+})
+
 
 
 module.exports = router;
