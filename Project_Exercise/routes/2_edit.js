@@ -315,7 +315,7 @@ function getSightNameFromURL(url) {
  * Validation on the data happens on the client sight.
  */
  router.post('/addTour', function(req, res, next) {
-  var tourData = req.body;
+  var tourData = JSON.parse(req.body.o);
   console.log(tourData);
 
   client.connect(function(err){
@@ -332,7 +332,7 @@ function getSightNameFromURL(url) {
 
     // find some documents
     for (let i = 0; i < array.length; i++) {
-      var tourStopp = collectionSights.find({"_id": tourData.items[i]});
+      var tourStopp = collectionSights.find({"_id": mongodb.ObjectId(tourData.items[i])});
       tourArray.push(tourStopp)
     }
 

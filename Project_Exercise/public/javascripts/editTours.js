@@ -37,19 +37,20 @@ $(".chb").each(function()
 var tourButton = document.getElementById('erstelleTourButton');
 
 tourButton.addEventListener('click', function(){
-    //var tourObj = {}
-    //tourObj.i = checkboxTourArray;
-    //tourObj.name = document.getElementById('tourName').value;
+    var tourObj = {}
+    tourObj.items = checkboxTourArray;
+    tourObj.name = document.getElementById('tourName').value;
+    var tourObjString = JSON.stringify(tourObj)
     
-    //console.log(tourObj);
+    console.log(tourObj);
 
      // Ajax request to send sight data to server to upload it to the database
      $.ajax({
         type: "POST",
         url: "/edit/addTour",
+        dataType: "json",
         data: {
-            name: document.getElementById('tourName').value,
-            items: checkboxTourArray
+            o: tourObjString
         },
         success: function (data) {
             window.location.href = "/edit";
