@@ -156,7 +156,7 @@ router.post('/delete', function(req, res) {
  */
 router.post('/rename', function(req, res) {
   var routesObj = JSON.parse(req.body.o);
-  console.log(routesObj);
+  console.log(routesObj.id);
 
 
   const db = client.db(dbName);

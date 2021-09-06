@@ -330,10 +330,26 @@ function getSightNameFromURL(url) {
 
     var tourArray = [];
 
+    //console.log(tourData.items[0]);
+    //var myfilter = {"_id": mongodb.ObjectId(tourData.items[0])};
+    //console.log(myfilter);
+    //collectionSights.find(myfilter)
+    //console.log(tourStop);
+
     // find some documents
-    for (let i = 0; i < array.length; i++) {
-      var tourStopp = collectionSights.find({"_id": mongodb.ObjectId(tourData.items[i])});
-      tourArray.push(tourStopp)
+    for (let i = 0; i < tourData.items.length; i++) {
+      var myfilter = {"_id": mongodb.ObjectId(tourData.items[i])};
+      console.log(myfilter);
+      collectionSights.find(myfilter).toArray(function(err, data)
+      {
+        assert.equal(err, null);
+        //console.log('Found the following records...');
+        //console.log(data[0]);
+        var tourStop = data[0];
+        //console.log(g);
+        tourArray.push(tourStop);
+        console.log(tourStop)
+      });
     }
 
     let tour = {};
@@ -344,10 +360,10 @@ function getSightNameFromURL(url) {
     collectionTours.insertOne(tour, function(err, result){
       assert.equal(err, null);
       
-      console.log(`Inserted the sight successfully ${result.insertedCount} document into the collection`)
+      //console.log(`Inserted the sight successfully ${result.insertedCount} document into the collection`)
       
     })
-    res.redirect("/edit");
+    //res.redirect("/edit");
   })
 })
 

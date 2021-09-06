@@ -46,6 +46,7 @@ tourButton.addEventListener('click', function(){
 
      // Ajax request to send sight data to server to upload it to the database
      $.ajax({
+        async: "false",
         type: "POST",
         url: "/edit/addTour",
         dataType: "json",
@@ -53,7 +54,7 @@ tourButton.addEventListener('click', function(){
             o: tourObjString
         },
         success: function (data) {
-            window.location.href = "/edit";
+            //window.location.href = "/edit";
         },
         error: function () {
             alert('error')
