@@ -10,7 +10,7 @@ const MongoClient = mongodb.MongoClient
 const url = 'mongodb://localhost:27017' // connection URL
 const client = new MongoClient(url) // mongodb client
 const dbName = 'ProjectDB' // database name
-const collectionName = 'sights' // collection name
+const collectionName = 'tours' // collection name
 
 /**
  * GET sights for listing.
@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
       console.log('Found the following records...');
       console.log(data);
   
-      res.render('1_home', {sightData: data});
+      res.render('1_home', {tourData: data});
 
     })
   })

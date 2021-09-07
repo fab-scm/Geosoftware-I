@@ -7,3 +7,18 @@ block content
     #map
     // Information section
     #infos
+        table.table.table-striped
+            tr
+                th
+                th Name
+                th Sehenswürdigkeiten
+            
+            each n, index in tourData
+                tr
+                    td
+                        input(type='checkbox' class='chb' id=n._id)
+                    td= n.name
+                    each x, i in tourData[index].items
+                        td= x.features[0].properties.Name
+
+        button(id='deleteTourButton') Löschen
