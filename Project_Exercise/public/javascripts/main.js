@@ -18,8 +18,6 @@
  // featureGroup to store drawn markers and polygons
  let markers = new L.FeatureGroup();
 
- // load all sights from database 
- addSightsFromDB(sights);
 
  // new draw control for the given map, in which only the reactangle tool is provided
  var drawControl = new L.Control.Draw({
@@ -44,4 +42,6 @@
  // adds the draw control to the map if currently on the edit route
  if (window.location.pathname == "/edit") {
      map.addControl(drawControl);
+    // load all sights from database 
+    addSightsFromDB(sights);
  }

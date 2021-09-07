@@ -12,6 +12,8 @@ block content
                 th
                 th Name
                 th Sehenswürdigkeiten
+                th
+                th
             
             each n, index in tourData
                 tr
@@ -22,3 +24,6 @@ block content
                         td= x.features[0].properties.Name
 
         button(id='deleteTourButton') Löschen
+
+    script.
+        var tours = !{JSON.stringify(tourData)}
