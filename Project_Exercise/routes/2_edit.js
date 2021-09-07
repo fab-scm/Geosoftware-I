@@ -318,28 +318,28 @@ function getSightNameFromURL(url) {
   var tourData = JSON.parse(req.body.o);
   //console.log(tourData.items);
 
-  client.connect(async function(err){
+  client.connect(function(err){
 
     assert.equal(null, err);
 
     //console.log('Connected successfully to server');
 
     const db = client.db(dbName);
-    //const collectionSights = db.collection(collectionNameSights);
+    const collectionSights = db.collection(collectionNameSights);
     const collectionTours = db.collection(collectionNameTours);
 
     var tourArray = [];
-    await getTourSightsPromise(tourData.items, tourArray);
+    //await getTourSightsPromise(tourData.items, tourArray);
     //var tourArray = await getTourSightsPromise(tourData.items);
     //console.log(tourArray);
     //console.log(tourData.items[0]);
-    //var myfilter = {"_id": mongodb.ObjectId(tourData.items[0])};
+    var myfilter = {"_id": mongodb.ObjectId(tourData.items[0])};
     //console.log(myfilter);
     //collectionSights.find(myfilter)
     //console.log(tourStop);
 
     // find some documents
-    /*for (let i = 0; i < tourData.items.length; i++) {
+    for (let i = 0; i < tourData.items.length; i++) {
       var myfilter = {"_id": mongodb.ObjectId(tourData.items[i])};
       console.log(myfilter);
       collectionSights.find(myfilter).toArray(function(err, data)
@@ -352,11 +352,11 @@ function getSightNameFromURL(url) {
         tourArray.push(tourStop);
         console.log(tourStop)
       });
-    }*/
+    }
     console.log(tourArray);
-    let tour = await buildTour(tourData, tourArray);
+    //let tour = await buildTour(tourData, tourArray);
 
-    //let tour = {"name": tourData.name, "items": tourArray};
+    let tour = {"name": tourData.name, "items": tourArray};
     //tour.name = tourData.name;
     //tour.items = tourArray;
 
@@ -371,7 +371,7 @@ function getSightNameFromURL(url) {
   res.redirect("/edit");
 })
 
-async function getTourSightsPromise(tourSightIds, tourArray) {
+/*async function getTourSightsPromise(tourSightIds, tourArray) {
     
     for (let i = 0; i < tourSightIds.length; i++) {
       var myfilter = {"_id": mongodb.ObjectId(tourSightIds[i])};
@@ -386,7 +386,7 @@ async function getTourSightsPromise(tourSightIds, tourArray) {
         //console.log(g);
         tourArray.push(data[0]);
         console.log(tourArray);
-      });*/
+      });
     }
 }
 
@@ -411,7 +411,7 @@ function buildTour(tourData, tourArray) {
     let tour = {"name": tourData.name, "items": tourArray};
     resolve(tour);
   })
-}
+}*/
 
 
 module.exports = router;
