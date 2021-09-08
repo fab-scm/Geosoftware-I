@@ -10,7 +10,7 @@ const MongoClient = mongodb.MongoClient
 const url = 'mongodb://localhost:27017' // connection URL
 const client = new MongoClient(url) // mongodb client
 const dbName = 'ProjectDB' // database name
-const collectionName = 'tours' // collection name
+const collectionNameTours = 'tours' // collection name
 
 /**
  * GET sights for listing.
@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
     console.log('Connected successfully to server');
 
     const db = client.db(dbName);
-    const collection = db.collection(collectionName);
+    const collection = db.collection(collectionNameTours);
 
     // find some documents
     collection.find({}).toArray(function(err, data)
@@ -38,6 +38,30 @@ router.get('/', function(req, res, next) {
 
     })
   })
+});
+
+/**
+ * POST to delete sight.
+ * Recieves an object with the ids of all checked sights that should be deleted from the database.
+ * It then iterates over the array and sends a delete query to DB with the specific sight to delete. 
+ */ 
+ router.post('/delete', function(req, res) {
+  var toursObj = JSON.parse(req.body.o);
+  console.log(toursObj);
+  const db = client.db(dbName);
+  const collection = db.collection(collectionNameTours);
+  if (toursObj.toursChecked.length > 0) {
+    for (var i=0; i<toursObj.toursChecked.length; i++) {
+      var myquery = {"_id": mongodb.ObjectId(toursObj.toursChecked[i])}
+      collection.deleteOne(myquery, function(err, data)
+      {
+          assert.equal(err, null);
+          //if (err) throw err;
+          console.log('One document deleted');
+      })
+      res.redirect("/home");
+    }  
+  }
 });
 
 module.exports = router;

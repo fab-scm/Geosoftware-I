@@ -51,4 +51,3 @@ tourButton.addEventListener('click', function(){
     })
     .done()
 })
-
