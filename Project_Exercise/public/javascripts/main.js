@@ -39,6 +39,13 @@
  // adds the layer control to the map
  L.control.layers(baseMap).addTo(map);
  
+// // adds the draw control to the map if currently on the edit route
+// if (window.location.pathname == "/") {
+//     map.addControl(drawControl);
+//    // load all sights from database 
+//    addSightsFromDB(sights);
+// }
+
  // adds the draw control to the map if currently on the edit route
  if (window.location.pathname == "/edit") {
      map.addControl(drawControl);

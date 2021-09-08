@@ -47,7 +47,7 @@ function addOSMTileLayer(mapObj) {
 /**
  * This funtion loads all sights from the database to display them in the map.
  * 
- * @param {geoJSON} sights - sights as geojson
+ * @param {Array} sights - array of sights as geojson
  */
 function addSightsFromDB(sights) {
     deleteCurrentMarkers();

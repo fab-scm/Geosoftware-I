@@ -1,16 +1,5 @@
 "use strict"
 
-
-//var checkbox = document.querySelector("input[type=checkbox]");
-
-/*$('chb').addEventListener('change', function() {
-  if (this.checked) {
-    console.log("Checkbox is checked..");
-  } else {
-    console.log("Checkbox is not checked..");
-  }
-});*/
-
 var checkboxTourArray = [];
 
 $(".chb").each(function()
