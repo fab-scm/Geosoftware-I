@@ -314,11 +314,11 @@ function getSightNameFromURL(url) {
  * Gets all the necessary information (from the form) about a sight from a ajax call and stores it in the database.
  * Validation on the data happens on the client sight.
  */
- router.post('/addTour', function(req, res, next) {
+ router.post('/addTour',function(req, res, next) {
   var tourData = JSON.parse(req.body.o);
   //console.log(tourData.items);
 
-  client.connect(function(err){
+  client.connect(async function(err){
 
     assert.equal(null, err);
 
@@ -329,89 +329,26 @@ function getSightNameFromURL(url) {
     const collectionTours = db.collection(collectionNameTours);
 
     var tourArray = [];
-    //await getTourSightsPromise(tourData.items, tourArray);
-    //var tourArray = await getTourSightsPromise(tourData.items);
-    //console.log(tourArray);
-    //console.log(tourData.items[0]);
     var myfilter = {"_id": mongodb.ObjectId(tourData.items[0])};
-    //console.log(myfilter);
-    //collectionSights.find(myfilter)
-    //console.log(tourStop);
 
     // find some documents
     for (let i = 0; i < tourData.items.length; i++) {
       var myfilter = {"_id": mongodb.ObjectId(tourData.items[i])};
       console.log(myfilter);
-      collectionSights.find(myfilter).toArray(function(err, data)
-      {
-        assert.equal(err, null);
-        //console.log('Found the following records...');
-        //console.log(data[0]);
-        var tourStop = data[0];
-        //console.log(g);
-        tourArray.push(tourStop);
-        console.log(tourStop)
-      });
+      let tourStop = await collectionSights.findOne(myfilter);
+      tourArray.push(tourStop);
+      console.log(tourStop)
     }
     console.log(tourArray);
-    //let tour = await buildTour(tourData, tourArray);
 
     let tour = {"name": tourData.name, "items": tourArray};
-    //tour.name = tourData.name;
-    //tour.items = tourArray;
 
     collectionTours.insertOne(tour, function(err, result){
-      assert.equal(err, null);
-      
-      //console.log(`Inserted the sight successfully ${result.insertedCount} document into the collection`)
-      
+      assert.equal(err, null);      
     })
     
   })
   res.redirect("/edit");
 })
-
-/*async function getTourSightsPromise(tourSightIds, tourArray) {
-    
-    for (let i = 0; i < tourSightIds.length; i++) {
-      var myfilter = {"_id": mongodb.ObjectId(tourSightIds[i])};
-      console.log(myfilter);
-      await findSightInDB(myfilter,tourArray);
-      /*collectionSights.find(myfilter).toArray(function(err, data)
-      {
-        assert.equal(err, null);
-        //console.log('Found the following records...');
-        //console.log(data[0]);
-        //var tourStop = data[0];
-        //console.log(g);
-        tourArray.push(data[0]);
-        console.log(tourArray);
-      });
-    }
-}
-
-async function findSightInDB(id,tourArray) {
-  const db = client.db(dbName);
-  const collectionSights = db.collection(collectionNameSights);
-  collectionSights.find(id).toArray(function(err, data)
-      {
-        assert.equal(err, null);
-        //console.log('Found the following records...');
-        //console.log(data[0]);
-        //var tourStop = data[0];
-        //console.log(g);
-        //let tourStop = data[0];
-        //console.log(data[0]);
-        tourArray.push(data[0]);
-      });
-}
-
-function buildTour(tourData, tourArray) {
-  return new Promise((resolve, reject) => {
-    let tour = {"name": tourData.name, "items": tourArray};
-    resolve(tour);
-  })
-}*/
-
 
 module.exports = router;
