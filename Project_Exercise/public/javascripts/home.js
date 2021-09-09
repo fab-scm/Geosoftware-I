@@ -10,7 +10,23 @@ $('input[type=checkbox]').change(function() {
         // Refers to the table body from the html-document and inserts the code generated in the makeTableHTML-function.
         table.innerHTML = makeTableHTML(fillContentTable(tour));
         table.style="display: block;";
-    } else {
+
+        var tablerows = document.getElementsByClassName("tablerow");
+        for (let i = 0; i < tablerows.length; i++) {
+            tablerows[i].addEventListener('mouseover', function(e) {
+                //console.log(this.id);
+                markerFunctionOpen(this.id);
+            })
+        }  
+        for (let i = 0; i < tablerows.length; i++) {
+            tablerows[i].addEventListener('mouseout', function(e) {
+                //console.log(this.id);
+                markerFunctionClose(this.id);
+            })
+        }  
+    }
+        
+    else {
         map.removeLayer(markers);
         markers = new L.FeatureGroup();
         table.style="display: none;";
@@ -80,9 +96,9 @@ deleteButton.addEventListener('click', function(){
  */
  function makeTableHTML(myArray) {
 
-    var result = "<table border=1><tr><th>#</th><th>Name</th><th>URL</th>";
+    var result = "<table border=1><tr><th>#</th><th>Name</th><th>URL</th><th>Sight ID</th>";
     for(var i=0; i<myArray.length; i++) {
-        result += "<tr>";
+        result += `<tr id= ${myArray[i][3]} class="tablerow">`;
         for(var j=0; j<myArray[i].length; j++){
             result += "<td>"+myArray[i][j]+"</td>";
         }
@@ -108,8 +124,8 @@ deleteButton.addEventListener('click', function(){
         var tableColumn = [];
         tableColumn[0] = i + 1;
         tableColumn[1] = tour.items[i].features[0].properties.Name;
-        tableColumn[2] = tour.items[i].features[0].properties.URL;;
-        
+        tableColumn[2] = tour.items[i].features[0].properties.URL;
+        tableColumn[3] = tour.items[i]._id;
         tableData.push(tableColumn);
     }
     return tableData;

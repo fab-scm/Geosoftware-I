@@ -44,28 +44,40 @@ function addOSMTileLayer(mapObj) {
     return new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="http://osm.org/copyright%22%3EOpenStreetMap</a> contributors'}).addTo(mapObj);
 }
 
+var sightsArray = [];
+
 /**
  * This funtion loads all sights from the database to display them in the map.
  * 
  * @param {Array} sights - array of sights as geojson
  */
 function addSightsFromDB(sights) {
+    sightsArray = [];
     deleteCurrentMarkers();
     for (let i = 0; i <sights.length; i++) {
         if (sights[i].features[0].geometry.type == "Point") {
            var s = L.geoJSON(sights[i], {
-               //swaps geojson coordinates from [lng, lat] to [lat, lng] 
+               // swaps geojson coordinates from [lng, lat] to [lat, lng] 
                coordsToLatLng: function (coords) {
                    return new L.LatLng(coords[1], coords[0]);
                }
            });
-           var marker = L.marker([s._layers[s._leaflet_id-1]._latlng.lat, s._layers[s._leaflet_id-1]._latlng.lng]);
-           //binds popup with all necessary informations to marker
+           var id = sights[i]._id;
+           var marker = L.marker([s._layers[s._leaflet_id-1]._latlng.lat, s._layers[s._leaflet_id-1]._latlng.lng], {sightsId: id});
+           sightsArray.push(marker);
+           // binds popup with all necessary informations to marker
            marker.bindPopup(  `<h5>Infos</h5>
                        <p>Name: ${sights[i].features[0].properties.Name}</p>
                        <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
                        <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
            markers.addLayer(marker);
+           // hovering over marker
+        //    marker.on('mouseover', function(e){
+        //        this.openPopup()
+        //    })
+        //    marker.on('mouseout', function(e){
+        //     this.closePopup()
+        //     })
         }
         if (sights[i].features[0].geometry.type == "Polygon") {
            var s = L.geoJSON(sights[i], {
@@ -76,16 +88,53 @@ function addSightsFromDB(sights) {
            });
            // builds array
            var coordinatesFinished = extractCoordinatesLatLng(s._layers[s._leaflet_id-1]._latlngs[0]);
-           var polygon = L.polygon(coordinatesFinished);
+           var id = sights[i]._id
+           var polygon = L.polygon(coordinatesFinished, {sightsId: id});
+           sightsArray.push(polygon);
            polygon.bindPopup(  `<h5>Infos</h5>
                       <p>Name: ${sights[i].features[0].properties.Name}</p>
                       <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
                       <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
            markers.addLayer(polygon);
+           // hovering over polygon
+        //    polygon.on('mouseover', function(e){
+        //        this.openPopup()
+        //    })
+        //    polygon.on('mouseout', function(e){
+        //        this.closePopup()
+        //    })
        }
     }
+    console.log(sightsArray);
     map.addLayer(markers);
 }
+
+function markerFunctionOpen(id){
+    for (var i in sightsArray){
+        var markerID = sightsArray[i].options.sightsId;
+        if (markerID == id){
+            sightsArray[i].openPopup();
+        };
+    }
+}
+
+function markerFunctionClose(id){
+    for (var i in sightsArray){
+        var markerID = sightsArray[i].options.sightsId;
+        if (markerID == id){
+            sightsArray[i].closePopup();
+        };
+    }
+}
+
+// $("tablerow").on('mouseout', function(e) {
+//     markerFunction(this.id);
+// })
+
+// $("a").click(function(){
+//     markerFunction($(this)[0].id);
+// });
+
 
 
 /**

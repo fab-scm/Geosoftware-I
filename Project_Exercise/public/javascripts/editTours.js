@@ -43,6 +43,7 @@ tourButton.addEventListener('click', function(){
             o: tourObjString
         },
         success: function (data) {
+            alert("Die Tour wurde erfolgreich hinzugefügt und ist unter 'Stadttouren' einsehbar.")
             window.location.href = "/edit";
         },
         error: function () {
