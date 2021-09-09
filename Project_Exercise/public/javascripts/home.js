@@ -1,9 +1,8 @@
 "use strict"
 let table = document.getElementById("table");
-var checkbox = document.querySelector("input[type=checkbox]");
 
 $('input[type=checkbox]').change(function() {
-    $('input.chb').not(this).prop('checked', false);
+    $('input.chb').not(this).prop('checked', false); //only one checkbox checked at the same time allowed
     if (this.checked) {
         let tour = tours.find(x => x._id === this.id);
         addSightsFromDB(tour.items);

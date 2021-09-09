@@ -17,9 +17,9 @@ $(".chb").each(function()
                                       checkboxTourArray.splice(index, 1);
                                     }
                                   }
-                                  console.log(this.id);
-                                  console.log(this.checked);
-                                  console.log(checkboxTourArray);
+                                //   console.log(this.id);
+                                //   console.log(this.checked);
+                                //   console.log(checkboxTourArray);
                               });
            });
 

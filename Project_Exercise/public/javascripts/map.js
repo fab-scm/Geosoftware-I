@@ -105,7 +105,7 @@ function addSightsFromDB(sights) {
         //    })
        }
     }
-    console.log(sightsArray);
+    console.log(sightsArray)
     map.addLayer(markers);
 }
 
@@ -126,16 +126,6 @@ function markerFunctionClose(id){
         };
     }
 }
-
-// $("tablerow").on('mouseout', function(e) {
-//     markerFunction(this.id);
-// })
-
-// $("a").click(function(){
-//     markerFunction($(this)[0].id);
-// });
-
-
 
 /**
  * This function builds an array of coordinate arrays from an array of coordinate objects.

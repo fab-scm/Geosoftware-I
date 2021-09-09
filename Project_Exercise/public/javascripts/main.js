@@ -51,4 +51,12 @@
      map.addControl(drawControl);
     // load all sights from database 
     addSightsFromDB(sights);
+    $('input[type=checkbox]').change(function() {
+        if (this.checked) {
+            markerFunctionOpen(this.id);
+        }
+        else{
+            markerFunctionClose(this.id);
+        }
+    })
  }

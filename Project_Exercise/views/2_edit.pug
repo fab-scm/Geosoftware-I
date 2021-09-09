@@ -5,6 +5,7 @@ block scripts
     // Loading scripts
     script(defer='' src='/javascripts/editSights.js')
     script(defer='' src='/javascripts/editTours.js')
+    script(defer='' src='/javascripts/busStop.js')
     
 
 block content 
@@ -37,5 +38,6 @@ block content
         input(id='tourName' type='text' placeholder='Tour Name' name='tourName')
         button(id='erstelleTourButton') Erstelle Tour
 
+        button(id='haltestelleButton') Nächste Haltestelle anzeigen
     script.
         var sights = !{JSON.stringify(sightData)}
