@@ -1,13 +1,24 @@
-var busStopObj;
+"use strict"
 
+var busStopObj;
 var turfPoints;
+
+var haltestellenMarker = new L.FeatureGroup();
 
 var haltestelleButton = document.getElementById("haltestelleButton");
 
+
+
 // Icon settings
-// var haltestelleIcon = L.icon({
-//     iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Zeichen_224_-_Haltestelle%2C_StVO_2017.svg'
-// })
+var haltestelleIcon = L.icon({
+    //iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Zeichen_224_-_Haltestelle%2C_StVO_2017.svg',
+    iconUrl: 'http://localhost:3000/javascripts/haltestelle.png',
+    iconSize:     [35, 35], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    //shadowAnchor: [4, 62],  // the same for the shadow
+    //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+})
 
 // Ajax call to retrieve information about all haltestellen
 $.ajax({
@@ -32,8 +43,11 @@ $.ajax({
 
 
 haltestelleButton.addEventListener("click", function(e) {
+    //map.removeLayer(haltestelleMarker);
     var checkedSights = getCheckedSights();
     console.log(checkedSights);
+    map.removeLayer(haltestellenMarker);
+    haltestellenMarker = new L.FeatureGroup();
     var polygonCenter;
     var targetPoint;
     var nearest;
@@ -55,6 +69,7 @@ haltestelleButton.addEventListener("click", function(e) {
                     console.log(nearest);
                 }
             }
+
         }
         var nearestCoordinates = nearest.geometry.coordinates;
         console.log(nearestCoordinates);
@@ -62,22 +77,21 @@ haltestelleButton.addEventListener("click", function(e) {
         for (let j = 0; j < busStopObj.features.length; j++) {
             if (JSON.stringify(busStopObj.features[j].geometry.coordinates) == JSON.stringify(nearestCoordinates)) {
                 var haltestelle = busStopObj.features[j];
-                var haltestelleMarker = L.marker([haltestelle.geometry.coordinates[1], haltestelle.geometry.coordinates[0]]);
-                haltestelleMarker.addTo(map);
+                var haltestelleMarker = L.marker([haltestelle.geometry.coordinates[1], haltestelle.geometry.coordinates[0]], {icon: haltestelleIcon});
+                haltestellenMarker.addLayer(haltestelleMarker);
+                haltestellenMarker.addTo(map);
             }
-            // else{
-            //     alert("DU HUSO")
-            // }
+            
         }
     }
-    else {
+    else if (checkedSights.sightsChecked.length > 1){
         alert("Bitte nur eine Sehenswürdigkeit auswählen.")
-    }
+        }
+        else {
+            alert("Bitte wähle eine Sehenswürdigkeit aus.")
+        }
 })
 
-// var getCheckedSights = getCheckedSights();
-// console.log(getCheckedSights);
-console.log(sights);
 
 
 
