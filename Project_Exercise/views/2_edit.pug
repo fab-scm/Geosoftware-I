@@ -1,11 +1,18 @@
 extends 0_layout
 
+block search
+    // Searchbar
+    form.form-inline.ml-auto
+        input#sights.form-control(type='search' placeholder='Search for sights' aria-label='search')
+        button.btn.btn-outline-secondary(type='submit') Search
+
 block scripts
 
     // Loading scripts
     script(defer='' src='/javascripts/editSights.js')
     script(defer='' src='/javascripts/editTours.js')
     script(defer='' src='/javascripts/busStop.js')
+    script(defer='' src='/javascripts/searchUtilities.js')
     
 
 block content 
