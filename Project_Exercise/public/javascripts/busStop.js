@@ -4,8 +4,10 @@ var busStopObj;
 var turfPoints;
 
 var haltestellenMarker = new L.FeatureGroup();
+var haltestelleMarker;
 
 var haltestelleButton = document.getElementById("haltestelleButton");
+var weatherButton = document.getElementById("weatherButton");
 
 
 
@@ -77,7 +79,9 @@ haltestelleButton.addEventListener("click", function(e) {
         for (let j = 0; j < busStopObj.features.length; j++) {
             if (JSON.stringify(busStopObj.features[j].geometry.coordinates) == JSON.stringify(nearestCoordinates)) {
                 var haltestelle = busStopObj.features[j];
-                var haltestelleMarker = L.marker([haltestelle.geometry.coordinates[1], haltestelle.geometry.coordinates[0]], {icon: haltestelleIcon});
+                console.log(haltestelle);
+                haltestelleMarker = L.marker([haltestelle.geometry.coordinates[1], haltestelle.geometry.coordinates[0]], {icon: haltestelleIcon});
+                getWeatherData(haltestelle.geometry.coordinates[1], haltestelle.geometry.coordinates[0], haltestelleMarker, haltestelle),
                 haltestellenMarker.addLayer(haltestelleMarker);
                 haltestellenMarker.addTo(map);
             }
@@ -90,6 +94,10 @@ haltestelleButton.addEventListener("click", function(e) {
         else {
             alert("Bitte wähle eine Sehenswürdigkeit aus.")
         }
+})
+
+weatherButton.addEventListener('click', function(e) {
+    haltestelleMarker.openPopup();
 })
 
 
@@ -115,3 +123,58 @@ haltestelleButton.addEventListener("click", function(e) {
     });
     return obj;
  }
+
+
+ /**
+ * The function makes an asynchronous HTTP request (ajax) to the openWeatherAPI and gets the weather
+ * for the coordinates of the intersection(the marker). If the request was successfull it calls the getReadableLocation()-function
+ * and provides it with the marker and the requested weatherData.
+ * 
+ * @param {float} latitude - latitude coordinate of the intersection
+ * @param {float} longitude - longitude coordinate of the intersection
+ * @param {L.Marker} marker - the marker currently "working" on
+ */
+function getWeatherData(latitude, longitude, marker, haltestelle) {
+    $.ajax({
+        url: `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${openweatherAPIKey}`,
+        method: "GET"
+    })
+    .done(function(weatherData){                                        // if the request was successfull
+        createWeatherMarkerPopup(marker, weatherData, haltestelle);
+    })
+    .fail(function(xhr, status, errorThrown){                           // if the request fails
+        alert("error");
+        console.dir(xhr)
+        console.log(status)
+        console.log(errorThrown)
+    })
+}
+
+
+/**
+ * The function creates a leaflet Popup for the marker and fills it with the weather information and
+ * a readable location description.
+ * 
+ * @param {object} result 
+ * @param {L.Marker} marker 
+ */
+ function createWeatherMarkerPopup(marker, weatherData, haltestelle){
+
+    // create weather Image
+    let weatherImage = new Image();
+    weatherImage.src = `http://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}@2x.png`
+
+    // craete date-object and define the 
+    let date = new Date(weatherData.current.dt*1000)
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+
+    // create Popup with the weather and location<s information
+    marker.bindPopup(  `<h5>${haltestelle.properties.lbez}</h5>
+                        <p>${date.toLocaleDateString('de-DE', options)} Uhr</p>
+                        <p><img src = ${weatherImage.src}></img></p>
+                        <p>${"Temperatur: " + Math.round(weatherData.current.temp) + "°C"}<br>
+                        ${"Windgeschwindigkeit: " + weatherData.current.wind_speed + " m/s"}<br>
+                        ${"Windrichtung: " + weatherData.current.wind_deg + "°"}<br>
+                        ${"Luftfeuchtigkeit: " + weatherData.current.humidity + " %"}<br>
+                        ${"Bewölkung: " + weatherData.current.clouds + " %"}</p>`)
+}
