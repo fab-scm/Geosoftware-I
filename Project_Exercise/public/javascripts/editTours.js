@@ -5,46 +5,44 @@ var checkboxTourArrayNames = []
 
 $(".chb").each(function() {
 
-               $(this).change(function() {
+        $(this).change(function() {
 
-                                $(this).attr('checked',true);
-                                $(".chb").attr('checked',false);
-                                if (this.checked == true) {
-                                    checkboxTourArray.push(this.id);
-                                    checkboxTourArrayNames.push(this.parentNode.nextSibling.innerHTML);
-                                }
-                                else {
-                                const index = checkboxTourArray.indexOf(this.id);
-                                if (index > -1) {
-                                    checkboxTourArray.splice(index, 1);
-                                    checkboxTourArrayNames.splice(index, 1);
-                                }
-                                }
+                $(this).attr('checked',true);
+                $(".chb").attr('checked',false);
+                if (this.checked) {
+                    checkboxTourArray.push(this.id);
+                    checkboxTourArrayNames.push(this.parentNode.nextSibling.innerHTML);
+                }
+                else {
+                    const index = checkboxTourArray.indexOf(this.id);
+                    if (index > -1) {
+                        checkboxTourArray.splice(index, 1);
+                        checkboxTourArrayNames.splice(index, 1);
+                    }
+                }
 
-                                if (checkboxTourArrayNames.length > 0) {
-                                    var tourTableArray = '<tr><th>Position</th><th>Sehenswürdigkeiten</th></tr>' 
-                                    for (let i = 0; i < checkboxTourArrayNames.length; i++) {
-                                        tourTableArray += `<tr>\
-                                                            <td>${i+1}</td>\
-                                                            <td>${checkboxTourArrayNames[i]}</td>\
-                                                            </tr>`
-                                    }
-                                    document.getElementById('tableTours').innerHTML = tourTableArray;
-                                    document.getElementById('tourTable').style.display = 'block';
-                                }
-                                else {
-                                    document.getElementById('tourTable').style.display = 'none';
-                                }
-                                
-                                
-                                
+                if (checkboxTourArrayNames.length > 0) {
+                    var tourTableArray = '<tr><th>Position</th><th>Sehenswürdigkeiten</th></tr>' 
+                    for (let i = 0; i < checkboxTourArrayNames.length; i++) {
+                        tourTableArray += `<tr>\
+                                            <td>${i+1}</td>\
+                                            <td>${checkboxTourArrayNames[i]}</td>\
+                                            </tr>`
+                    }
+                    document.getElementById('tableTours').innerHTML = tourTableArray;
+                    document.getElementById('tableTours').style.display = 'table';
+                    document.getElementById('erstelleTour').style.display = 'block';
+                }
+                else {
+                    document.getElementById('tableTours').style.display = 'none';
+                    document.getElementById('erstelleTour').style.display = 'none';
+                }
+                
+                console.log(checkboxTourArray);
+                console.log(checkboxTourArrayNames);
 
-                            //   console.log(this.id);
-                            //   console.log(this.checked);
-                                console.log(checkboxTourArray);
-                                console.log(checkboxTourArrayNames);
-                              });
-           });
+        });
+});
 
 var tourButton = document.getElementById('erstelleTourButton');
 

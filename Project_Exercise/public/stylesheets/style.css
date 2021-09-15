@@ -22,15 +22,69 @@
 
     #deleteButton {
         margin: 10px;
+        font-weight: bold;
+    }
+
+    #haltestelleButton {
+        margin: 10px;
+        font-weight: bold;
+        color: forestgreen;
+        outline: auto;
+        outline-color: forestgreen;
+    }
+
+    #weatherButton {
+        margin: 10px;
+        font-weight: bold;
+    }
+
+    #deleteTourButton {
+        margin: 10px;
+        font-weight: bold;
     }
 
     p,h5 {
-        text-align: center;
+        text-align: justify;
     }
 
     #tourSights tr:hover td {
         background: rgb(116, 151, 255)
     }
+
+    #tableTours {
+        outline: auto;
+        outline-color: black;
+        margin-left: 10px;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;
+    }
+
+    #erstelleTour {
+        padding: 20px;
+    }
+    
+    .float-child-1 {
+        width: 70%;
+        float: left;
+    }  
+
+    .float-child-2 {
+        width: 30%;
+        float: left;
+    }  
+
+    #ui-id-1 {
+        z-index: 1031;
+    }
+
+    #uploadOptions {
+        margin-right: 10px;
+    }
+
 }
 
 /* CSS-settings smaller than 1024px*/
@@ -67,4 +121,7 @@
         background: rgb(116, 151, 255)
     }
     
+    #ui-id-1 {
+        z-index: 1031;
+    }
 }

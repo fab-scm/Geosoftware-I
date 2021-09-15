@@ -43,7 +43,6 @@ function clickSearch() {
         return el.features[0].properties.Name === searchInput;
     })
 
-    document.getElementById(details[0]._id).checked = true;
     markerFunctionOpen(details[0]._id);
 }
 

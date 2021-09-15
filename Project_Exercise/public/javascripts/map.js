@@ -71,13 +71,6 @@ function addSightsFromDB(sights) {
                        <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
                        <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
            markers.addLayer(marker);
-           // hovering over marker
-        //    marker.on('mouseover', function(e){
-        //        this.openPopup()
-        //    })
-        //    marker.on('mouseout', function(e){
-        //     this.closePopup()
-        //     })
         }
         if (sights[i].features[0].geometry.type == "Polygon") {
            var s = L.geoJSON(sights[i], {

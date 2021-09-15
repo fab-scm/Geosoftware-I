@@ -1,10 +1,15 @@
 extends 0_layout
 
-block search
-    // Searchbar
-    #search.form-inline.ml-auto
-        input#sights.form-control(type='search' placeholder='Search for sights' aria-label='search' onkeydown = "if (event.keyCode == 13) {document.getElementById('searchButton').click()}")
-        button.btn.btn-outline-light(id="searchButton" onclick='clickSearch()') Search
+
+block search 
+    form.d-flex
+            input#sights.form-control.me-2(type='search', placeholder='Suche nach Sehenswürdigkeiten', aria-label='Search' onkeydown = "if (event.keyCode == 13) {document.getElementById('searchButton').click()}")
+            button.btn.btn-primary(id="searchButton" onclick='clickSearch()') Suche
+//- block search
+//-     // Searchbar
+//-     form.d-flex
+//-         input.form-control(type='search' placeholder='Suche nach Sehenswürdigkeiten' aria-label='Search' onkeydown = "if (event.keyCode == 13) {document.getElementById('searchButton').click()}")
+//-         button.btn.btn-primary(id="searchButton" onclick='clickSearch()') Suche
 
 block scripts
 
@@ -22,13 +27,6 @@ block content
     #infos
 
         #sightTable
-            form(id='formAddSightInputFile' name='addSightFile' method='post' action='/edit/addSightInputFile' enctype='multipart/form-data')
-                input(id='uploadSightInputFile' type='file' placeholder='sight' name='sightInputFile')
-                button(id='btnSubmitFile' type='submit') Submit
-            form(id='formAddSightInputText' name='addSightText' method='post' action='/edit/addSightInputText' enctype='multipart/form-data')
-                input(id='uploadSightInputText' type='text' placeholder='Insert GeoJSON string' name='sightInputText')
-                button(id='btnSubmitText' type='submit') Submit
-
             table.table.table-striped
                 tr
                     th
@@ -42,17 +40,33 @@ block content
                         td= n.features[0].properties.Name
                         td= n.features[0].properties.URL  
 
-        #buttons
-            button(id='deleteButton') Löschen
+        button(class="btn btn-danger" id='deleteButton') Löschen
+        button(class="btn btn-warning" id='haltestelleButton') Nächste Haltestelle anzeigen
+        button(class="btn btn-info" id='weatherButton') Haltestellename und aktuelles Wetter anzeigen
 
-            input(id='tourName' type='text' placeholder='Tour Name' name='tourName')
-            button(id='erstelleTourButton') Erstelle Tour
-
-            button(id='haltestelleButton') Nächste Haltestelle anzeigen
-            button(id='weatherButton') Haltestellename und aktuelles Wetter anzeigen
+        br
+        br
         
-        #tourTable(style='display: none;')
-            table.table.table-striped(id='tableTours')
+        .grid-container
+            #tourTable.grid-child
+                table.table.table-striped(id='tableTours')
+                #erstelleTour.float-container(style="display: none;")
+                    input.form-control.float-child-1(id='tourName' type='text' placeholder='Tour Name' name='tourName')
+                    button.float-child-2(class="btn btn-success" id='erstelleTourButton') Erstelle Tour
+            
+
+            #uploadOptions.grid-child
+                form(id='formAddSightInputFile' name='addSightFile' method='post' action='/edit/addSightInputFile' enctype='multipart/form-data')
+                    input.form-control(id='uploadSightInputFile' type='file' placeholder='sight' name='sightInputFile')
+                    button.form-control(class="btn btn-success" id='btnSubmitFile' type='submit') Hochloaden
+
+                br
+                br
+
+                form(id='formAddSightInputText' name='addSightText' method='post' action='/edit/addSightInputText' enctype='multipart/form-data')
+                    textarea(id='uploadSightInputText' type='text' placeholder='Füge eine Sehenswürdigkeit als GeoJSON-Text ein ' name='sightInputText' style='height: 200px; width: 100%')
+                    br
+                    button(class="btn btn-success" id='btnSubmitText' type='submit') Hochladen
 
     script.
         var sights = !{JSON.stringify(sightData)}

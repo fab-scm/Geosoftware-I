@@ -15,30 +15,22 @@
     var tempMarker = event.layer.addTo(map);
     
     // html-form, used for marker-/polygon-popup (Name, Beschreibung, URL)
-    var popupContent =      '<form id="popup-form">\
-                                <p>\
-                                    <div>\
-                                            <label for="name">Name:</label>\
-                                            <input id="name" class="popup-input" type="text" name="name" style="float: right;"/>\
-                                    </div>\
-                                </p>\
-                                <p>\
-                                    <div style="padding-top: 10px;">\
-                                        <label for="beschreibung">Beschreibung:</label>\
-                                        <input id="beschreibung" class="popup-input" type="text" name="beschreibung" style="float: right;"/>\
-                                    </div>\
-                                </p>\
-                                <p>\
-                                    <div style="padding-top: 10px;">\
-                                        <label for="url">URL:</label>\
-                                        <input id="url" class="popup-input" type="text" name="url" style="float: right;"/>\
-                                    </div>\
-                                </p>\
-                                <p>\
-                                    <div style="padding-top: 10px;">\
-                                        <button id="send" type="button">Send</button>\
-                                    </div>\
-                                </p>\
+    var popupContent =      '<form id="popup-form" style="font-size: 11pt">\
+                                <div style="height: 62px">\
+                                    <label for="name">Name:</label>\
+                                    <input id="name" class="popup-input" type="text" name="name" style="float: left; width: 300px"/>\
+                                </div>\
+                                <div style="height: 137px;">\
+                                    <label for="beschreibung">Beschreibung:</label>\
+                                    <textarea id="beschreibung" class="popup-input" type="text" name="beschreibung" style="float: left; width: 300px; height: 100px;"></textarea>\
+                                </div>\
+                                <div style="height: 65px;">\
+                                    <label for="url">URL:</label>\
+                                    <input id="url" class="popup-input" type="text" name="url" style="float: left; width: 300px"/>\
+                                </div>\
+                                <div style="height: 25px;">\
+                                    <button id="send" type="button">Send</button>\
+                                </div>\
                             </form>';
  
 
