@@ -97,7 +97,13 @@ haltestelleButton.addEventListener("click", function(e) {
 })
 
 weatherButton.addEventListener('click', function(e) {
-    haltestelleMarker.openPopup();
+    if (haltestelleMarker != null){
+        haltestelleMarker.openPopup();
+    }
+    else {
+        alert('Bitte zuerst Sehenswürdigkeit auswählen und Haltestelle anzeigen lassen.');
+    }
+    
 })
 
 

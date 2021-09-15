@@ -54,7 +54,7 @@
     })
  
     // variable that contains the "send"-button HTML-object
-    let button = document.getElementById("send");
+    let sendButton = document.getElementById("send");
  
     /**
      * Event-listener that listens to a 'click'-event on the send-button. The function that gets called when the event happens,
@@ -64,7 +64,7 @@
      *                  -> If yes, the wikipedia-API is used to get the first 3 sentences of the wikipedia article and sets it as sights description.
      *                  -> If not, use the entered description or set 'Keine Informationen vorhanden' as description, if no description was given. 
      */ 
-    button.addEventListener('click', function(){
+    sendButton.addEventListener('click', function(){
         var name = document.getElementById("name").value;
         var url = document.getElementById("url").value;
         var beschreibung = document.getElementById("beschreibung").value;

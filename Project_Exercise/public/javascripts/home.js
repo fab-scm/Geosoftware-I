@@ -1,14 +1,17 @@
 "use strict"
+
 let table = document.getElementById("table");
+let tourSights = document.getElementById("tourSights");
 
 $('input[type=checkbox]').change(function() {
-    $('input.chb').not(this).prop('checked', false); //only one checkbox checked at the same time allowed
+    $('input[type=checkbox]').not(this).prop('checked', false); //only one checkbox checked at the same time allowed
     if (this.checked) {
-        let tour = tours.find(x => x._id === this.id);
+        var tour = tours.find(x => x._id === this.id);
+        console.log(tour);
         addSightsFromDB(tour.items);
         // Refers to the table body from the html-document and inserts the code generated in the makeTableHTML-function.
         table.innerHTML = makeTableHTML(fillContentTable(tour));
-        table.style="display: block;";
+        tourSights.style.display = 'block';
 
         var tablerows = document.getElementsByClassName("tablerow");
         for (let i = 0; i < tablerows.length; i++) {
@@ -28,7 +31,7 @@ $('input[type=checkbox]').change(function() {
     else {
         map.removeLayer(markers);
         markers = new L.FeatureGroup();
-        table.style="display: none;";
+        tourSights.style.display = 'none';
     }
 });
 

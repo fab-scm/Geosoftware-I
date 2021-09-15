@@ -9,22 +9,22 @@ block content
     // Information section
     #infos
         #tourName
-        table.table.table-striped
-            tr
-                th
-                th Name
-            
-            each n, index in tourData
+            table.table.table-striped
                 tr
-                    td
-                        input(type='checkbox' class='chb' id=n._id)
-                    td= n.name
-        
-        button(id='deleteTourButton' style='margin-bottom: 10px') Löschen
+                    th
+                    th Name
+                
+                each n, index in tourData
+                    tr
+                        td
+                            input(type='checkbox' class='chb' id=n._id)
+                        td= n.name
+        #buttons
+            button(id='deleteTourButton' style='margin-bottom: 10px') Löschen
 
         //Section for information about sights in a certain tour
-        #tourSights
-            table.table.table-striped(id="table" style="display:none;")
+        #tourSights(style="display: none")
+            table.table.table-striped(id="table")
             
     script.
         var tours = !{JSON.stringify(tourData)}

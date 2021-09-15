@@ -1,5 +1,7 @@
 "use strict"
 
+var searchButton = document.getElementById('searchButton');
+
 let sightNames = sights.map(function (data) {
     return data.features[0].properties.Name;
 });
@@ -18,7 +20,11 @@ $("#sights").autocomplete({
                 return el.features[0].properties.Name === ui.item.value
             })
 
- 
+            console.log(details);
+            
+            // document.getElementById(details[0]._id).checked = true;
+            // markerFunctionOpen(details[0]._id);
+
             // show the details as a bootstrap card
             //showDetailsAsCard(details)
 
@@ -29,26 +35,19 @@ $("#sights").autocomplete({
         }
 })
 
+function clickSearch() {
+    var searchInput = document.getElementById('sights').value;
+    console.log(searchInput);
 
-// function showDetailsAsCard(details) {
-//     let text = `The current selection is: <br> <br> POI Name: ${details[0].properties.poiname}, City Name:  ${details[0].properties.cityname}, Link:  <a href=" ${details[0].properties.link}"> ${details[0].properties.link}</a> `
-//     //  console.log(details[0].properties)
+    let details = sights.filter(function(el){
+        return el.features[0].properties.Name === searchInput;
+    })
 
-//     // create a card element and fill it with information from the current poi
-//     let cardbody = document.getElementById("information").children[0]
-//     console.dir(cardbody)
-//     // Title
-//     cardbody.children[0].innerHTML = details[0].properties.poiname
-//     // subtitle
-//     cardbody.children[1].innerHTML = details[0].properties.cityname
-//     //content
-//     nearbyPlaces(details[0]).then(result => {
-//         cardbody.children[2].innerHTML = result
-//         console.trace("I am doing a test")
-//     })
-//     // link
-//     cardbody.children[3].href = details[0].properties.link
-//     cardbody.children[3].innerHTML = details[0].properties.link
+    document.getElementById(details[0]._id).checked = true;
+    markerFunctionOpen(details[0]._id);
+}
 
-
-// }
+function resetSearchValue() {
+    console.log(document.getElementById('sights').value);
+    document.getElementById('sights').value = "";
+}
