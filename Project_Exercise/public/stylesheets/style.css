@@ -85,6 +85,10 @@
         margin-right: 10px;
     }
 
+    #sights {
+        width: 400px;
+    }
+
 }
 
 /* CSS-settings smaller than 1024px*/
