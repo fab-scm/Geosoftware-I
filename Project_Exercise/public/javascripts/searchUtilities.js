@@ -5,7 +5,6 @@ var searchButton = document.getElementById('searchButton');
 let sightNames = sights.map(function (data) {
     return data.features[0].properties.Name;
 });
-
 console.log(sightNames);
 
 // autocomplete
@@ -21,19 +20,11 @@ $("#sights").autocomplete({
             })
 
             console.log(details);
-            
-            // document.getElementById(details[0]._id).checked = true;
-            // markerFunctionOpen(details[0]._id);
-
-            // show the details as a bootstrap card
-            //showDetailsAsCard(details)
-
-            // show the details on a leaflet map 
-            //showDetailsOnMap(details)
 
             return false // see https://css-tricks.com/return-false-and-prevent-default/
         }
 })
+
 
 function clickSearch() {
     var searchInput = document.getElementById('sights').value;

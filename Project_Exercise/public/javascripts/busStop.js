@@ -13,13 +13,8 @@ var weatherButton = document.getElementById("weatherButton");
 
 // Icon settings
 var haltestelleIcon = L.icon({
-    //iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Zeichen_224_-_Haltestelle%2C_StVO_2017.svg',
     iconUrl: 'http://localhost:3000/images/haltestelle.png',
     iconSize:     [35, 35], // size of the icon
-    //shadowSize:   [50, 64], // size of the shadow
-    //iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    //shadowAnchor: [4, 62],  // the same for the shadow
-    //popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 })
 
 // Ajax call to retrieve information about all haltestellen

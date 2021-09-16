@@ -38,33 +38,18 @@
  
  // adds the layer control to the map
  L.control.layers(baseMap).addTo(map);
- 
-// // adds the draw control to the map if currently on the edit route
-// if (window.location.pathname == "/") {
-//     map.addControl(drawControl);
-//    // load all sights from database 
-//    addSightsFromDB(sights);
-// }
 
  // adds the draw control to the map if currently on the edit route
  if (window.location.pathname == "/edit") {
     map.addControl(drawControl);
     // load all sights from database 
     addSightsFromDB(sights);
-    var i = 0;
     $('input[type=checkbox]').change(function() {
-        
         if (this.checked) {
             markerFunctionOpen(this.id);
-            i++;
-            //console.log([i, this.parentNode.nextSibling.innerHTML]);
-            //var tr = document.createElement('tr');
-            //document.getElementById('tableTours').firstChild.appendChild(tr);
-            //$('#tourTable').firstChild.append(tr);
         }
         else{
             markerFunctionClose(this.id);
-            i--;
         }
     })
  }

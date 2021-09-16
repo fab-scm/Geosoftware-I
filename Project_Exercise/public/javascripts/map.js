@@ -89,13 +89,6 @@ function addSightsFromDB(sights) {
                       <p><strong>Beschreibung: </strong> ${sights[i].features[0].properties.Beschreibung}</p>
                       <p><strong>URL: </strong> <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
            markers.addLayer(polygon);
-           // hovering over polygon
-        //    polygon.on('mouseover', function(e){
-        //        this.openPopup()
-        //    })
-        //    polygon.on('mouseout', function(e){
-        //        this.closePopup()
-        //    })
        }
     }
     console.log(sightsArray)
