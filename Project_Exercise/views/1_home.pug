@@ -3,6 +3,14 @@ extends 0_layout
 block scripts
     script(defer='' src='/javascripts/home.js')
 
+block navTabs 
+    li.nav-item
+        a.nav-item.nav-link.active(href='/') Stadttouren
+    li.nav-item
+        a.nav-item.nav-link(href='/edit') Sehenswürdigkeiten bearbeiten/Touren erstellen
+    li.nav-item 
+        a.nav-item.nav-link(href='/validFiles') Valid Files
+
 block content 
     // Map section
     #map

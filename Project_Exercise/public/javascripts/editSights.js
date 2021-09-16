@@ -17,15 +17,15 @@
     // html-form, used for marker-/polygon-popup (Name, Beschreibung, URL)
     var popupContent =      '<form id="popup-form" style="font-size: 11pt">\
                                 <div style="height: 62px">\
-                                    <label for="name">Name:</label>\
+                                    <label for="name" style="font-weight: bold">Name:</label>\
                                     <input id="name" class="popup-input" type="text" name="name" style="float: left; width: 300px"/>\
                                 </div>\
                                 <div style="height: 137px;">\
-                                    <label for="beschreibung">Beschreibung:</label>\
+                                    <label for="beschreibung" style="font-weight: bold">Beschreibung:</label>\
                                     <textarea id="beschreibung" class="popup-input" type="text" name="beschreibung" style="float: left; width: 300px; height: 100px;"></textarea>\
                                 </div>\
                                 <div style="height: 65px;">\
-                                    <label for="url">URL:</label>\
+                                    <label for="url" style="font-weight: bold">URL:</label>\
                                     <input id="url" class="popup-input" type="text" name="url" style="float: left; width: 300px"/>\
                                 </div>\
                                 <div style="height: 25px;">\

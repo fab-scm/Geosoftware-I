@@ -1,11 +1,5 @@
 extends 0_layout
 
-
-block search 
-    form.d-flex
-            input#sights.form-control.me-2(type='search', placeholder='Suche nach Sehenswürdigkeiten', aria-label='Search' onkeydown = "if (event.keyCode == 13) {document.getElementById('searchButton').click()}")
-            button.btn.btn-primary(id="searchButton" onclick='clickSearch()') Suche
-
 block scripts
 
     // Loading scripts
@@ -14,6 +8,20 @@ block scripts
     script(defer='' src='/javascripts/busStop.js')
     script(defer='' src='/javascripts/searchUtilities.js')
     
+block navTabs 
+    li.nav-item
+        a.nav-item.nav-link(href='/') Stadttouren
+    li.nav-item
+        a.nav-item.nav-link.active(href='/edit') Sehenswürdigkeiten bearbeiten/Touren erstellen
+    li.nav-item 
+        a.nav-item.nav-link(href='/validFiles') Valid Files
+
+
+block search 
+    form.d-flex
+            input#sights.form-control.me-2(type='search', placeholder='Suche nach Sehenswürdigkeiten', aria-label='Search' onkeydown = "if (event.keyCode == 13) {document.getElementById('searchButton').click()}")
+            button.btn.btn-primary(id="searchButton" type="button" onclick='clickSearch()') Suche
+
 
 block content 
     // Map section
@@ -44,10 +52,13 @@ block content
         
         .grid-container
             #tourTable.grid-child
-                table.table.table-striped(id='tableTours')
+                table.table.table-striped(id='tableTours' style="display: none;")
                 #erstelleTour.float-container(style="display: none;")
                     input.form-control.float-child-1(id='tourName' type='text' placeholder='Tour Name' name='tourName')
                     button.float-child-2(class="btn btn-success" id='erstelleTourButton') Erstelle Tour
+                    
+                    br
+                    br
             
 
             #uploadOptions.grid-child
@@ -59,7 +70,7 @@ block content
                 br
 
                 form(id='formAddSightInputText' name='addSightText' method='post' action='/edit/addSightInputText' enctype='multipart/form-data')
-                    textarea(id='uploadSightInputText' type='text' placeholder='Füge eine Sehenswürdigkeit als GeoJSON-Text ein ' name='sightInputText' style='height: 200px; width: 100%')
+                    textarea(id='uploadSightInputText' type='text' placeholder='Füge eine Sehenswürdigkeit als GeoJSON-Text ein ' name='sightInputText' style='height: 12em; width: 100%' onkeydown = "if (event.keyCode == 13) {document.getElementById('btnSubmitText').click()}")
                     br
                     button(class="btn btn-success" id='btnSubmitText' type='submit') Hochladen
 

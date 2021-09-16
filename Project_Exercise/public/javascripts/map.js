@@ -67,9 +67,9 @@ function addSightsFromDB(sights) {
            sightsArray.push(marker);
            // binds popup with all necessary informations to marker
            marker.bindPopup(  `<h5>Infos</h5>
-                       <p>Name: ${sights[i].features[0].properties.Name}</p>
-                       <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
-                       <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
+                       <p><strong>Name: </strong> ${sights[i].features[0].properties.Name}</p>
+                       <p><strong>Beschreibung: </strong> ${sights[i].features[0].properties.Beschreibung}</p>
+                       <p><strong>URL: </strong> <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
            markers.addLayer(marker);
         }
         if (sights[i].features[0].geometry.type == "Polygon") {
@@ -85,9 +85,9 @@ function addSightsFromDB(sights) {
            var polygon = L.polygon(coordinatesFinished, {sightsId: id});
            sightsArray.push(polygon);
            polygon.bindPopup(  `<h5>Infos</h5>
-                      <p>Name: ${sights[i].features[0].properties.Name}</p>
-                      <p>Beschreibung: ${sights[i].features[0].properties.Beschreibung}</p>
-                      <p>URL: <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
+                      <p><strong>Name: </strong> ${sights[i].features[0].properties.Name}</p>
+                      <p><strong>Beschreibung: </strong> ${sights[i].features[0].properties.Beschreibung}</p>
+                      <p><strong>URL: </strong> <a href="${sights[i].features[0].properties.URL}">${sights[i].features[0].properties.URL}</a></p> `)
            markers.addLayer(polygon);
            // hovering over polygon
         //    polygon.on('mouseover', function(e){

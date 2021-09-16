@@ -176,9 +176,9 @@ function getWeatherData(latitude, longitude, marker, haltestelle) {
 
     // create Popup with the weather and location<s information
     marker.bindPopup(  `<h5>${haltestelle.properties.lbez}</h5>
-                        <p>${date.toLocaleDateString('de-DE', options)} Uhr</p>
-                        <p><img src = ${weatherImage.src}></img></p>
-                        <p>${"Temperatur: " + Math.round(weatherData.current.temp) + "°C"}<br>
+                        <p style="text-align: center">${date.toLocaleDateString('de-DE', options)} Uhr</p>
+                        <p style="text-align: center"><img src = ${weatherImage.src}></img></p>
+                        <p style="text-align: center">${"Temperatur: " + Math.round(weatherData.current.temp) + "°C"}<br>
                         ${"Windgeschwindigkeit: " + weatherData.current.wind_speed + " m/s"}<br>
                         ${"Windrichtung: " + weatherData.current.wind_deg + "°"}<br>
                         ${"Luftfeuchtigkeit: " + weatherData.current.humidity + " %"}<br>
