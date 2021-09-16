@@ -8,10 +8,12 @@
   "dependencies": {
     "assert": "^2.0.0",
     "axios": "^0.21.2",
+    "bootstrap": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "jquery": "^3.6.0",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
     "mongodb": "^4.1.0",
