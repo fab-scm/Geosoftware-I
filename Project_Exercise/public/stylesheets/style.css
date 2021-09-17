@@ -100,7 +100,7 @@
         margin-right: 10px;
     }
 
-    #sights {
+    #sights, #tours {
         width: 400px;
     }
 
@@ -114,6 +114,18 @@
         margin-right: 10px;
         margin-left: 10px;
     }
+
+    #contact>p,
+    #description>p {
+        text-align: center;
+    }
+
+    #contact>h5,
+    #description>h5 {
+        text-align: center;
+        font-weight: bold;
+    }
+
 
 }
 
@@ -225,6 +237,17 @@
     li.nav-item {
         margin-top: 10px;
         margin-bottom: 10px;
+    }
+
+    #contact>p,
+    #description>p {
+        text-align: center;
+    }
+
+    #contact>h5,
+    #description>h5 {
+        text-align: center;
+        font-weight: bold;
     }
 
 }

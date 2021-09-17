@@ -1,27 +1,32 @@
 "use strict"
 
+// JS-object that stores all the queried busstops
 var busStopObj;
+
+//  variable that stores a FeatureCollection with all busstops as turf points
 var turfPoints;
 
+// variable that stores a FeatureGroup with all busstop markers
 var haltestellenMarker = new L.FeatureGroup();
+// variable that stores the current busstop marker
 var haltestelleMarker;
 
+// html-buttons
 var haltestelleButton = document.getElementById("haltestelleButton");
 var weatherButton = document.getElementById("weatherButton");
 
 
-
-// Icon settings
+// Icon that is used as leaflet marker
 var haltestelleIcon = L.icon({
     iconUrl: 'http://localhost:3000/images/haltestelle.png',
     iconSize:     [35, 35], // size of the icon
 })
 
-// Ajax call to retrieve information about all haltestellen
+// Ajax call to retrieve information about all busstops via conterra haltestellen-api
 $.ajax({
     url: 'https://rest.busradar.conterra.de/prod/haltestellen',
     method: "GET",
-    success: function(data){
+    success: function(data) {
         busStopObj = data;
         var points = [];
         for (let i = 0; i < busStopObj.features.length; i++) {
@@ -39,8 +44,17 @@ $.ajax({
 .done()
 
 
+/**
+  * Event-listener that listens for a click event on the haltestellenButton. 
+  * If the button is clicked the callback function is executed which gets validates if there is only one id checked and gets its id (otherwise: throw alert).
+  * Then it searches the whole sight in the sights-array to get the coordinates. The coordinates get converted to turf-points to be able 
+  * to compare to the busstops. If the right busstop is found the function searches the right busstop object in busstop object by matching coordinates.
+  * After that a marker and popup is created for the nearest busstop. The popup gets filled with the current weather information
+  * through the getWeatherData()-function, but does not get opened.
+  * 
+  */
 haltestelleButton.addEventListener("click", function(e) {
-    //map.removeLayer(haltestelleMarker);
+
     var checkedSights = getCheckedSights();
     console.log(checkedSights);
     map.removeLayer(haltestellenMarker);
@@ -48,87 +62,87 @@ haltestelleButton.addEventListener("click", function(e) {
     var polygonCenter;
     var targetPoint;
     var nearest;
-    if (checkedSights.sightsChecked.length == 1){
-        for (let i = 0; i < sights.length; i++) {
-            if (sights[i]._id == checkedSights.sightsChecked[0]){
-                if (sights[i].features[0].geometry.type == "Point"){
+
+    if (checkedSights.sightsChecked.length == 1) {      // more than one sight checked?
+
+        for (let i = 0; i < sights.length; i++) {       // find the right sight by...
+
+            if (sights[i]._id == checkedSights.sightsChecked[0]) {  // ...comparing the ids 
+
+                if (sights[i].features[0].geometry.type == "Point") {  // if the sight is of type point 
+
                     targetPoint = turf.point(sights[i].features[0].geometry.coordinates);
                     console.log(targetPoint);
-                    nearest = turf.nearestPoint(targetPoint, turfPoints);
-                    console.log(nearest);
+                    nearest = turf.nearestPoint(targetPoint, turfPoints);   // calculate nearest busstop turf-point
+                    // console.log(nearest);
+
                 }
-                else{
+                else if (sights[i].features[0].geometry.type == "Polygon"){    // if the sight is of type point       
+
                     console.log([[sights[i].features[0].geometry.coordinates]]);
                     var polygon = turf.polygon(sights[i].features[0].geometry.coordinates); 
-                    polygonCenter = turf.centroid(polygon);
+                    polygonCenter = turf.centroid(polygon);             // calculate Polygon centroid as turf-point
                     console.log(polygonCenter);
-                    nearest = turf.nearestPoint(polygonCenter, turfPoints);
-                    console.log(nearest);
+                    nearest = turf.nearestPoint(polygonCenter, turfPoints); // calculate nearest busstop turf-point
+                    // console.log(nearest);
+
                 }
             }
-
         }
-        var nearestCoordinates = nearest.geometry.coordinates;
+
+        var nearestCoordinates = nearest.geometry.coordinates; // variable that only stores the coordinates of the nearest busstop
         console.log(nearestCoordinates);
-        console.log(busStopObj.features[0].geometry.coordinates);
-        for (let j = 0; j < busStopObj.features.length; j++) {
-            if (JSON.stringify(busStopObj.features[j].geometry.coordinates) == JSON.stringify(nearestCoordinates)) {
+
+        for (let j = 0; j < busStopObj.features.length; j++) {  // find the whole busstop-object by...
+
+            if (JSON.stringify(busStopObj.features[j].geometry.coordinates) == JSON.stringify(nearestCoordinates)) { // ...comparing the coordinates
+
                 var haltestelle = busStopObj.features[j];
                 console.log(haltestelle);
                 haltestelleMarker = L.marker([haltestelle.geometry.coordinates[1], haltestelle.geometry.coordinates[0]], {icon: haltestelleIcon});
                 getWeatherData(haltestelle.geometry.coordinates[1], haltestelle.geometry.coordinates[0], haltestelleMarker, haltestelle),
                 haltestellenMarker.addLayer(haltestelleMarker);
                 haltestellenMarker.addTo(map);
-            }
-            
+
+            }     
         }
     }
-    else if (checkedSights.sightsChecked.length > 1){
-        alert("Bitte nur eine Sehenswürdigkeit auswählen.")
+    else if (checkedSights.sightsChecked.length > 1) {
+
+        alert("Bitte nur eine Sehenswürdigkeit auswählen.");
+
         }
         else {
-            alert("Bitte wähle eine Sehenswürdigkeit aus.")
+
+            alert("Bitte wähle eine Sehenswürdigkeit aus.");
+
         }
 })
-
-weatherButton.addEventListener('click', function(e) {
-    if (haltestelleMarker != null){
-        haltestelleMarker.openPopup();
-    }
-    else {
-        alert('Bitte zuerst Sehenswürdigkeit auswählen und Haltestelle anzeigen lassen.');
-    }
-    
-})
-
-
-
-
 
 /**
-  * The function iterates through all HTML-objects from type input:checkbox
-  * and puts all ids of the checked boxes into one array which is stored as an js object.
+  * Event-listener that listens for a click event on the weatherButton. 
+  * If the button is clicked the callback function is executed which opens the popup of the busstop marker
+  * if one was created. If there was no busstop marker created before, the functions throws an alert and requests the user
+  * to first show a nearby busstop.
   * 
-  * @returns {object} the object that contains an array with the ids of all the checked boxes in the HTML-document
   */
- function getCheckedSights() {
-    var obj = {};
-    obj.sightsChecked=[];
-    
-    $("input:checkbox").each(function(){
-        var $this = $(this);
+weatherButton.addEventListener('click', function() {
+    if (haltestelleMarker != null) {
 
-        if($this.is(":checked")){
-            obj.sightsChecked.push($this.attr("id"));
-        }
-    });
-    return obj;
- }
+        haltestelleMarker.openPopup();
+
+    }
+    else {
+
+        alert('Bitte zuerst Sehenswürdigkeit auswählen und Haltestelle anzeigen lassen.');
+
+    }   
+})
 
 
  /**
  * The function makes an asynchronous HTTP request (ajax) to the openWeatherAPI and gets the weather
- * for the coordinates of the intersection(the marker). If the request was successfull it calls the getReadableLocation()-function
+ * for the coordinates of the intersection(the marker). If the request was successfull it calls the createWeatherMarkerPopup()-function
  * and provides it with the marker and the requested weatherData.
  * 
  * @param {float} latitude - latitude coordinate of the intersection
@@ -140,10 +154,10 @@ function getWeatherData(latitude, longitude, marker, haltestelle) {
         url: `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&units=metric&appid=${openweatherAPIKey}`,
         method: "GET"
     })
-    .done(function(weatherData){                                        // if the request was successfull
+    .done(function(weatherData) {                                        // if the request was successfull
         createWeatherMarkerPopup(marker, weatherData, haltestelle);
     })
-    .fail(function(xhr, status, errorThrown){                           // if the request fails
+    .fail(function(xhr, status, errorThrown) {                           // if the request fails
         alert("error");
         console.dir(xhr)
         console.log(status)
@@ -154,12 +168,12 @@ function getWeatherData(latitude, longitude, marker, haltestelle) {
 
 /**
  * The function creates a leaflet Popup for the marker and fills it with the weather information and
- * a readable location description.
+ * a date and the busstop name.
  * 
  * @param {object} result 
  * @param {L.Marker} marker 
  */
- function createWeatherMarkerPopup(marker, weatherData, haltestelle){
+ function createWeatherMarkerPopup(marker, weatherData, haltestelle) {
 
     // create weather Image
     let weatherImage = new Image();

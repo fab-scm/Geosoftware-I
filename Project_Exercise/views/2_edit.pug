@@ -6,7 +6,7 @@ block scripts
     script(defer='' src='/javascripts/editSights.js')
     script(defer='' src='/javascripts/editTours.js')
     script(defer='' src='/javascripts/busStop.js')
-    script(defer='' src='/javascripts/searchUtilities.js')
+    script(defer='' src='/javascripts/searchUtilitiesSights.js')
     
 block navTabs 
     li.nav-item
@@ -54,7 +54,7 @@ block content
             #tourTable.grid-child
                 table.table.table-striped(id='tableTours' style="display: none;")
                 #erstelleTour.float-container(style="display: none;")
-                    input.form-control.float-child-1(id='tourName' type='text' placeholder='Tour Name' name='tourName')
+                    input.form-control.float-child-1(id='tourName' type='text' placeholder='Tour Name' name='tourName' onkeydown = "if (event.keyCode == 13) {document.getElementById('erstelleTourButton').click()}")
                     button.float-child-2(class="btn btn-success" id='erstelleTourButton') Erstelle Tour
                     
                     br

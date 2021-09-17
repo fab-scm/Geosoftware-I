@@ -156,25 +156,7 @@
     }
  })
 
- /**
-  * The function iterates through all HTML-objects from type input:checkbox
-  * and puts all ids of the checked boxes into one array which is stored as an js object.
-  * 
-  * @returns {object} the object that contains an array with the ids of all the checked boxes in the HTML-document
-  */
- function getCheckedSights() {
-    var obj = {};
-    obj.sightsChecked=[];
-    
-    $("input:checkbox").each(function(){
-        var $this = $(this);
-
-        if($this.is(":checked")){
-            obj.sightsChecked.push($this.attr("id"));
-        }
-    });
-    return obj;
- }
+ 
 
 /**
  * This function creates a GeoJSON string from informations about a sight
