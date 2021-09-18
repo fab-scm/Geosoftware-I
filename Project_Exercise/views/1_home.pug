@@ -13,7 +13,7 @@ block navTabs
         a.nav-item.nav-link(href='/validFiles') Valid Files
 
 block search 
-    form.d-flex
+    div.d-flex
             input#tours.form-control.me-2(type='search', placeholder='Suche nach Stadttouren', aria-label='Search' onkeydown = "if (event.keyCode == 13) {document.getElementById('searchButton').click()}")
             button.btn.btn-primary(id="searchButton" type="button" onclick='clickSearch()') Suche
 

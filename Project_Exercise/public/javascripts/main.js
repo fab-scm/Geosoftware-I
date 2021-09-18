@@ -39,7 +39,8 @@
  // adds the layer control to the map
  L.control.layers(baseMap).addTo(map);
 
- // adds the draw control to the map if currently on the edit route
+ // adds the draw control and all sights to the map if currently on the '/edit' route
+ // in addition a change-event-listener is added to each input of type 'checkbox' that opens/closes the marker-popup when the sight gets checked/unchecked
  if (window.location.pathname == "/edit") {
     map.addControl(drawControl);
     // load all sights from database 

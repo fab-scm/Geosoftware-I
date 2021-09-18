@@ -44,6 +44,7 @@ function addOSMTileLayer(mapObj) {
     return new L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution:'&copy; <a href="http://osm.org/copyright%22%3EOpenStreetMap</a> contributors'}).addTo(mapObj);
 }
 
+// array that is filled with all the associated sight-markers to the sights in the database 
 var sightsArray = [];
 
 /**
@@ -95,6 +96,12 @@ function addSightsFromDB(sights) {
     map.addLayer(markers);
 }
 
+
+/**
+ * The function opens the marker-popup of the sight with the given id.
+ * 
+ * @param {String} id - DB
+ */
 function markerFunctionOpen(id){
     for (var i in sightsArray){
         var markerID = sightsArray[i].options.sightsId;
@@ -104,6 +111,12 @@ function markerFunctionOpen(id){
     }
 }
 
+
+/**
+ * The function closes the marker-popup of the sight with the given id.
+ * 
+ * @param {String} id 
+ */
 function markerFunctionClose(id){
     for (var i in sightsArray){
         var markerID = sightsArray[i].options.sightsId;

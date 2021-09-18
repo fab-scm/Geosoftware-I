@@ -14,53 +14,51 @@ $("#tours").autocomplete({
         select: function (event, ui) {
             this.value = ui.item.value // update the value of the current field with the value of the selected element
 
-            let details = tours.filter(function (el) {
-                // return the only object for which the poiname matches the selection
-                return el.name === ui.item.value
-            })
-
-            console.log(details);
-
             return false // see https://css-tricks.com/return-false-and-prevent-default/
         }
 })
 
 
+/**
+ * The function takes the value of the search-input(#tours)-field.
+ * - If the input value is one of the tourNames the right tour is filtered and the tablerows color is changed for 5 seconds.
+ * In addition the checkbox of the tour gets checked and the event-listener that listens to the change of checkboxes is executed.
+ * The value of the search-input is set back to ''.
+ * - If the input value is not included in tourNames an alert is thrown and the value of the search-input is set back to ''.
+ * 
+ */
 function clickSearch() {
     var searchInput = document.getElementById('tours').value;
 
-    let details = tours.filter(function(el){
-        return el.name === searchInput;
-    })
+    if (tourNames.includes(searchInput)) {
+        
+        let details = tours.filter(function(el){
+            return el.name === searchInput;
+        })
 
-    var tourCheckbox = document.getElementById(details[0]._id);
-    tourCheckbox.checked = true;
+        var tablerow = document.getElementById(details[0]._id).parentNode.parentNode;
+        console.log(tablerow);
+        changeBackgroundColor(tablerow);
 
-    $('input[type=checkbox]').not(tourCheckbox).prop('checked', false);
+        document.getElementById(details[0]._id).click();
 
-    var tour = tours.find(x => x._id === tourCheckbox.id);
-        console.log(tour);
-        addSightsFromDB(tour.items);
-        // Refers to the table body from the html-document and inserts the code generated in the makeTableHTML-function.
-        table.innerHTML = makeTableHTML(fillContentTable(tour));
-        tourSights.style.display = 'block';
-
-        var tablerows = document.getElementsByClassName("tablerow");
-        for (let i = 0; i < tablerows.length; i++) {
-            tablerows[i].addEventListener('mouseover', function(e) {
-                //console.log(this.id);
-                markerFunctionOpen(this.id);
-            })
-        }  
-        for (let i = 0; i < tablerows.length; i++) {
-            tablerows[i].addEventListener('mouseout', function(e) {
-                //console.log(this.id);
-                markerFunctionClose(this.id);
-            })
-        }  
+        setTimeout(function() {document.getElementById('tours').value = ''}, 100);
+    }
+    else {
+        alert('Keine Tour mit diesem Namen gefunden');
+        document.getElementById('tours').value = ''
+    }
+    
 }
 
-function resetSearchValue() {
-    console.log(document.getElementById('sights').value);
-    document.getElementById('sights').value = "";
+/**
+ * The function changes the background-color of the given html-element for 5 seconds.
+ * 
+ * @param {html-element} htmlElem
+ */
+ function changeBackgroundColor(htmlElem) {
+    var currentColor = htmlElem.style.background;
+    console.log(currentColor);
+    htmlElem.style.background = 'cornflowerblue';
+    setTimeout(function(){htmlElem.style.backgroundColor = currentColor}, 5000)
 }

@@ -1,13 +1,25 @@
 "use strict"
 
+// html-objects
 let table = document.getElementById("table");
 let tourSights = document.getElementById("tourSights");
 
+
+/**
+ * Event-listener that listens to change-event on html-element of type checkbox.
+ * If a checkbox changes the callback-function is executed which first unchecks all previous checked boxes, so only only one checkbox 
+ * can be checked at the same time. 
+ * - If the checkbox gets CHECKED, the right tour ist found by the id of the checkbox and all the the sights of the tour 
+ * are added to map via addSightsFromDB()-function. In addition a table is created that lists all sights of the checked tour.
+ * An Event-listener that listens to a 'mouseover/mouseout' is added to each table row which opens the matching pop-up, when the user hovers over the tablerow.
+ * - If the checkbox gets UNCHECKED. The markers in the map are removed, the markers featureGroup() gets reseted and the table gets undisplayed.
+ * 
+ */
 $('input[type=checkbox]').change(function() {
     $('input[type=checkbox]').not(this).prop('checked', false); //only one checkbox checked at the same time allowed
     if (this.checked) {
         var tour = tours.find(x => x._id === this.id);
-        console.log(tour);
+        // console.log(tour);
         addSightsFromDB(tour.items);
         // Refers to the table body from the html-document and inserts the code generated in the makeTableHTML-function.
         table.innerHTML = makeTableHTML(fillContentTable(tour));

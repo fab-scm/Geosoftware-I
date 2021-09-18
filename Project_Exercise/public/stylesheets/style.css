@@ -62,8 +62,8 @@
     }
 
     #tourSights tr:hover td {
-        background: rgb(116, 151, 255)
-    }
+        background: cornflowerblue;
+        }
 
     
     #tableTours {
@@ -192,7 +192,7 @@
     }
 
     #tourSights tr:hover td {
-        background: rgb(116, 151, 255)
+        background: cornflowerblue
     }
 
     #tourTable {
