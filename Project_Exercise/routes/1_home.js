@@ -8,7 +8,8 @@ const assert = require('assert')
 // mongoDB
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
-const url = 'mongodb://localhost:27017' // connection URL
+const url = 'mongodb://mongo:27017'
+// const url = 'mongodb://localhost:27017' // connection URL
 const client = new MongoClient(url) // mongodb client
 const dbName = 'ProjectDB' // database name
 const collectionNameTours = 'tours' // collection name
@@ -34,9 +35,7 @@ router.get('/', function(req, res, next) {
       assert.equal(err, null);
       console.log('Found the following records...');
       console.log(data);
-  
       res.render('1_home', {tourData: data});
-
     })
   })
 });
