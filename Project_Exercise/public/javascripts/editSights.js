@@ -190,7 +190,7 @@
         return geoJSON;
     }
     else {
-        var coordinates = extractCoordinatesLngLat(coords);
+        var coordinates = extractCoordinatesLngLatPolygonString(coords);
         let geoJSON = `{
             "type": "FeatureCollection",
             "features": [
@@ -215,10 +215,10 @@
 /**
  * This funtion extract the coordinates of a drawn leaflet polygon and changes it from [lat, lng] to [lng, lat]. It also converts the array of coordinates into a string.
  * 
- * @param {Object} coords - coordinates of a sight {"lat":, "lng":}
+ * @param {Array} coords - coordinates of a sight {"lat":, "lng":}
  * @returns - coordinates [lng, lat] as a string
  */
- function extractCoordinatesLngLat(coords) {
+ function extractCoordinatesLngLatPolygonString(coords) {
     var coordinates = `[[`;
     for (let i = 0; i < coords.length; i++) {
         coordinates += `[${coords[i].lng}, ${coords[i].lat}],`;

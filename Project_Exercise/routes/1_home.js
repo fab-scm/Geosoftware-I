@@ -48,6 +48,7 @@ router.get('/', function(req, res, next) {
  */ 
  router.post('/delete', function(req, res) {
   var toursObj = JSON.parse(req.body.o);
+  console.log(req);
   console.log(toursObj);
   const db = client.db(dbName);
   const collection = db.collection(collectionNameTours);

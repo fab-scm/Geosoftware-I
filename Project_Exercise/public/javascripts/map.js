@@ -81,7 +81,8 @@ function addSightsFromDB(sights) {
                }
            });
            // builds array
-           var coordinatesFinished = extractCoordinatesLatLng(s._layers[s._leaflet_id-1]._latlngs[0]);
+           console.log(s._layers[s._leaflet_id-1]._latlngs[0]);
+           var coordinatesFinished = extractCoordinatesLatLngPolygon(s._layers[s._leaflet_id-1]._latlngs[0]);
            var id = sights[i]._id
            var polygon = L.polygon(coordinatesFinished, {sightsId: id});
            sightsArray.push(polygon);
@@ -129,12 +130,14 @@ function markerFunctionClose(id){
 /**
  * This function builds an array of coordinate arrays from an array of coordinate objects.
  * 
- * @param {[[lat,lng], ...]} coords 
+ * @param {array} - [{lat: ... ,lng: ...}, ...] coords 
  * @returns - array of coordinates
  */
-function extractCoordinatesLatLng(coords) {
+function extractCoordinatesLatLngPolygon(coords) 
+{
     var coordinates = [];
-    for (let i = 0; i < coords.length; i++) {
+    for (let i = 0; i < coords.length; i++) 
+    {
         var coord = [coords[i].lat, coords[i].lng];
         coordinates.push(coord);
     }
@@ -146,7 +149,8 @@ function extractCoordinatesLatLng(coords) {
 /**
  * Function, that removes current markers or polygons and resets the markers featuregroup.
  */
-function deleteCurrentMarkers() {
+function deleteCurrentMarkers() 
+{
     map.removeLayer(markers);
     markers = new L.FeatureGroup();
  }
