@@ -16,8 +16,8 @@ const upload = multer({ storage: storage});
 // mongoDB
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
-// const url = 'mongodb://localhost:27017' // connection URL
-const url = 'mongodb://mongo:27017'
+const url = 'mongodb://localhost:27017' // connection URL
+// const url = 'mongodb://mongo:27017'
 const client = new MongoClient(url) // mongodb client
 const dbName = 'ProjectDB' // database name
 const collectionNameSights = 'sights' // collection name
@@ -30,7 +30,7 @@ const collectionNameTours = 'tours' // collection name
  * Connects to the mongoDB and finds all the sights stored in the used collection
  * and sends the information about the sights to the pug-view (=_layout.pug) where they are processed to get displayed.
  */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   client.connect(function(err)
   {
     assert.equal(null, err);
