@@ -14,5 +14,11 @@ It is necessary to wait until the app started complete which means that you have
 - The app is listening at http://localhost:4000
 - The mongo-express service is listening at http://localhost:8081
 
+In the folder exampleData you can find two collections which can be imported to the mongo-express database.
+Follow the following steps to work with the example Data:
+            - create a database named 'ProjectDB' in the mongo-express service
+            - create two collections inside 'ProjectDB' named 'sights' and 'tours'
+            - use 'Import - mongoexport json' to import the files into the right collection
+If it does not work, open the example colletions. You can copy the the objects inside the array individually and paste them into the textarea on the website to upload them to the database.
 
 The wikipedia-urls used on the website must be in the form "https://de.wikipedia.org/wiki/sightName" to make the api calls work properly.
