@@ -8,8 +8,8 @@ const assert = require('assert')
 // mongoDB
 const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient
-// const url = 'mongodb://mongo:27017'
-const url = 'mongodb://localhost:27017' // connection URL
+const url = 'mongodb://mongo:27017'
+// const url = 'mongodb://localhost:27017' // connection URL
 const client = new MongoClient(url) // mongodb client
 const dbName = 'ProjectDB' // database name
 const collectionNameTours = 'tours' // collection name
