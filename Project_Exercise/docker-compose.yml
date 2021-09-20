@@ -19,6 +19,7 @@ services:
     image: mongo-express
     ports: 
             - '8081:8081'
+    restart: always
 
     # find out where to mount to in the image's Dockerfile;
     #           here: https://github.com/docker-library/mongo/blob/00a8519463e776e797c227681a595986d8f9dbe1/3.0/Dockerfile
