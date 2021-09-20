@@ -18,9 +18,8 @@ var weatherButton = document.getElementById("weatherButton");
 
 // Icon that is used as leaflet marker
 var haltestelleIcon = L.icon({
-    // iconUrl: '.../images/haltestelle.png',
-    // iconUrl: 'http://localhost:3000/images/haltestelle.png',
-    iconUrl: 'http://localhost:4000/images/haltestelle.png',
+    iconUrl: 'http://localhost:3000/images/haltestelle.png',
+    // iconUrl: 'http://localhost:4000/images/haltestelle.png',
     iconSize:     [35, 35], // size of the icon
 })
 
