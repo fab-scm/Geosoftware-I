@@ -9,4 +9,10 @@ in this directory. The file uses the uploaded image of the node part, an existin
 Command (from the directory where the file is stored):
 docker-compose up
 
-It is necessary to wait until the app started complete which means that you have to ignore that the mongo-express service exises a several times with exit code 0 and restarts every time until everything is loaded successfully. After this everything works properly.
+It is necessary to wait until the app started complete which means that you have to ignore that the mongo-express service exises several times with exit code 0 and restarts every time until everything is loaded successfully. After this, everything should work properly.
+
+- The app is listening at http://localhost:4000
+- The mongo-express service is listening at http://localhost:8081
+
+
+The wikipedia-urls used on the website must be in the form "https://de.wikipedia.org/wiki/sightName" to make the api calls work properly.
