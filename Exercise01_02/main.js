@@ -14,7 +14,7 @@
  * @returns -  a String of the generated HTML-Code
  */
  function makeTableHTML(myArray) {
-    var result = "<table border=1>";
+    var result = "<>";
     for(var i=0; i<myArray.length; i++) {
         result += "<tr>";
         for(var j=0; j<myArray[i].length; j++){
@@ -22,7 +22,7 @@
         }
         result += "</tr>";
     }
-    result += "</table>";
+    result += "</>";
 
     return result;
 }
