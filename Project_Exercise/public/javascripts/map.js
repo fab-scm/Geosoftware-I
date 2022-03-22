@@ -107,6 +107,7 @@ function markerFunctionOpen(id){
     for (var i in sightsArray){
         var markerID = sightsArray[i].options.sightsId;
         if (markerID == id){
+            console.log(sightsArray[i])
             sightsArray[i].openPopup();
         };
     }
